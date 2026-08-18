@@ -48,6 +48,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    osa.url = "path:/home/krozzzis/osa";
+    osa.url = "github:krozzzis/osa";
   };
 }

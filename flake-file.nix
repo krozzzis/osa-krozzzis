@@ -58,11 +58,7 @@ in
 
     flake-file.url = "github:vic/flake-file";
 
-    # Relative path:../osa doesn't resolve once this flake is fetched into
-    # the store (git+file flakes copy the tree first, so "../" escapes the
-    # store in pure eval mode) -- absolute path for local dev; swap for a
-    # github: URL once osa is pushed somewhere.
-    osa.url = "path:/home/krozzzis/osa";
+    osa.url = "github:krozzzis/osa";
   };
 
   # Like osa itself, this flake doesn't build nixosConfigurations -- it's a

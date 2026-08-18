@@ -908,13 +908,16 @@
       },
       "locked": {
         "lastModified": 1786992193,
-        "narHash": "sha256-5nF52XR69RGkZ/5yzdIToqQ2+M2RStYs3iorH8HOTCM=",
-        "path": "/home/krozzzis/osa",
-        "type": "path"
+        "narHash": "sha256-0j2eZOvdqMEvj0k6+KA/bJPX+4mjqH61DPsGOsvSbEs=",
+        "owner": "krozzzis",
+        "repo": "osa",
+        "rev": "8c5e05f252177e784db1d3d30fb0e70e10c5aed6",
+        "type": "github"
       },
       "original": {
-        "path": "/home/krozzzis/osa",
-        "type": "path"
+        "owner": "krozzzis",
+        "repo": "osa",
+        "type": "github"
       }
     },
     "pre-commit-hooks": {
