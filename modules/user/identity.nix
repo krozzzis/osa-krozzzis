@@ -1,10 +1,13 @@
+# Values only -- the user.* option declarations live in the osa flake
+# (modules/osa/user/default.nix); downstream flakes just fill them in.
 { delib, ... }:
 delib.module {
   name = "user.constants";
 
-  options.user.constants = with delib; {
-    username = readOnly (strOption "krozzzis");
-    userfullname = readOnly (strOption "Nikita Shumov");
-    useremail = readOnly (strOption "schumov.nn@gmail.com");
+  myconfig.always = {
+    user.constants = {
+      username = "krozzzis";
+      useremail = "schumov.nn@gmail.com";
+    };
   };
 }
