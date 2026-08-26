@@ -7,7 +7,12 @@ in
 delib.rice {
   name = "niri";
 
-  myconfig = {
+  myconfig = { myconfig, ... }: let
+    inherit (lib) getName;
+    app = pkg: { spawn = [ (getName pkg) ]; };
+  in {
+    user.desktop.enable = true;
+
     osa.de.niri.enable = true;
     osa.de.dms.enable = true;
     osa.apps.walker.enable = true;
@@ -112,6 +117,12 @@ delib.rice {
       # -- quit
       (wmShift // { key = "E"; action = { quit = [ ]; }; })
       { mod = [ "Ctrl" "Alt" ]; key = "Delete"; action = { quit = [ ]; }; }
+
+      # -- app spawns
+      (wm // { key = "Return"; action = app myconfig.user.terminal.default.pkg; title = "Open Terminal"; })
+      (wm // { key = "P";      action = app myconfig.osa.de.niri.launcher.default.pkg; title = "Open Launcher"; })
+      (wm // { key = "E";      action = app myconfig.user.fileManager.default.pkg; title = "Open File Manager"; })
+      (wmCtrl // { key = "L";  action = app myconfig.user.browser.default.pkg; title = "Open Browser"; })
     ];
   };
 
