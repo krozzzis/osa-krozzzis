@@ -22,10 +22,17 @@ delib.module {
     };
   };
 
-  nixos.always = {
-    # Стандартный путь NixOS: аватар из home.file + AccountsService для гритера.
-    # Без tmpfiles-хаков — иконка появится после первого логина (home-manager
-    # создаст ~/.face), на первом экране гритера будет дефолтная.
+  nixos.always = { myconfig, ... }: let
+    inherit (myconfig.user.constants) username;
+    avatar = myconfig.osa.user.avatar;
+  in {
+    # Как в Gnome/Windows: аватар лежит в системе (/var/lib/AccountsService),
+    # доступен гритеру до первого логина. home.file — для лок-скрина.
     services.accounts-daemon.enable = true;
+    systemd.tmpfiles.rules = [
+      "C+ /home/${username}/.face - - - - ${avatar}"
+      "d /var/lib/AccountsService/icons 0755 root root -"
+      "C+ /var/lib/AccountsService/icons/${username} - - - - ${avatar}"
+    ];
   };
 }
