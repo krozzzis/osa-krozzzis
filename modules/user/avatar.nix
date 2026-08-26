@@ -26,22 +26,13 @@ delib.module {
     inherit (myconfig.user.constants) username;
     avatar = myconfig.osa.user.avatar;
   in {
-    # home.file runs only after the first login (home-manager activation),
-    # so at the very first greeter the files don't exist yet. Seed them
-    # early via tmpfiles so AccountsService (which serves them over D-Bus
-    # because the greeter can't read 0700 ~) has something to show.
+    # home.file появляется только после первого логина, а гритер нужен сразу.
+    # Копируем аватар заранее через tmpfiles — работает автоматически при
+    # включении модуля, без ручных шагов.
     services.accounts-daemon.enable = true;
-
     systemd.tmpfiles.rules = [
-      "d /home/${username} 0700 ${username} users -"
       "C+ /home/${username}/.face - - - - ${avatar}"
-      "C+ /home/${username}/.face.icon - - - - ${avatar}"
-      "C+ /home/${username}/.face.png - - - - ${avatar}"
-      "z /home/${username}/.face 0644 ${username} users -"
-      "z /home/${username}/.face.icon 0644 ${username} users -"
-      "z /home/${username}/.face.png 0644 ${username} users -"
-      # AccountsService also looks under /var/lib/AccountsService
-      "d /var/lib/AccountsService/icons 0755 root root - -"
+      "d /var/lib/AccountsService/icons 0755 root root -"
       "C+ /var/lib/AccountsService/icons/${username} - - - - ${avatar}"
     ];
   };
