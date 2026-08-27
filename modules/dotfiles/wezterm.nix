@@ -12,9 +12,8 @@ delib.module {
       config.font = wezterm.font '${myconfig.user.fonts.monospace.name}'
       config.hide_tab_bar_if_only_one_tab = true
 
-      config.colors = {
-          background = 'rgba(0,0,0,0.7)',
-      }
+      -- background/opacity now handled in osa.terminal.wezterm (window_background_opacity 0.95, wayland blur, #0a0a0a)
+      -- keep only font/hide_tab_bar here, don't override colors/background
       return config
     '';
   };
