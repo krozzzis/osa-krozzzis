@@ -16,6 +16,7 @@ delib.module {
     # Music notation + audio plugins (LV2/VST3/CLAP exposed via vstPath).
     osa.media.musescore.enable = true;
     osa.media.lspPlugins.enable = true;
+    osa.media.kdenlive.enable = true;
 
     # Default apps — user preferences, not host hardware.
     # mkDefault so a host (e.g. eeepc) can still override per-device if needed.
