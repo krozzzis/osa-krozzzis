@@ -1,12 +1,9 @@
 { delib, ... }:
 delib.rice {
   name = "xfce";
+  inherits = [ "all" ];
 
   myconfig = {
-    osa.de.xfce.enable = true;
-  };
-
-  nixos = {
-    services.displayManager.defaultSession = "xfce";
+    osa.de.rice.primary = "xfce";
   };
 }

@@ -1,16 +1,9 @@
 { delib, ... }:
 delib.rice {
   name = "niri";
+  inherits = [ "all" ];
 
   myconfig = {
-    user.desktop.enable = true;
-
-    osa.de.niri.enable = true;
-    osa.de.dms.enable = true;
-    osa.apps.walker.enable = true;
-  };
-
-  nixos = {
-    services.displayManager.defaultSession = "niri";
+    osa.de.rice.primary = "niri";
   };
 }

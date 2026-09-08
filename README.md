@@ -1,116 +1,98 @@
 # osa-krozzzis
 
-krozzzis's personal configuration layer, built on top of the
-[osa](https://github.com/krozzzis/osa) module library: identity, user-level
-profile toggles (shell/gui/server/desktop), default-app choices, and rice
-(desktop environment) presets. Like `osa`, this flake declares no hosts and
-builds no `nixosConfigurations` by itself — it's consumed by a hosts flake
-(see [osa-hosts](https://github.com/krozzzis/osa-hosts), private).
+Персональная конфигурация krozzzis и реальные хосты в одном composable-флейке,
+построенном поверх [osa](https://github.com/krozzzis/osa).
 
-## Layout
+Флейк сразу экспортирует `nixosConfigurations`, `homeConfigurations` и
+offline installer packages. При этом границы слоёв сохранены: базовая библиотека
+OSA, персональные модули/rices и хосты остаются отдельными каталогами и могут
+заменяться независимо.
+
+## Структура
 
 ```
-modules/user/      profile modules: identity, gui/shell/server/desktop
-                    toggles, default apps, fonts, dev, layout, shortcuts
-modules/dotfiles/   dotfile-shaped config for specific tools (nixvim,
-                    starship, wezterm)
-rices/              DE presets: niri, hyprland, xfce, caelestia
+modules/user/      identity, профили, default apps, шрифты и shortcuts
+modules/dotfiles/  nixvim, starship, wezterm
+modules/dms/       только персональная косметика DMS (bar/widgets/control center)
+rices/             выбор primary session и набор персональных desktop bundles
+hosts/             nixlaptop, eeepc, pi-backup
+lib/installer.nix  генерация offline installer ISO
 ```
 
-Modules are namespaced `myconfig.user.*` (vs. `myconfig.osa.*` for the
-library modules in `osa`). `modules/user/identity.nix` hardcodes the
-identity (username `krozzzis`, full name, email) — fork this repo and
-change that file if you want your own identity on top of `osa`.
+Библиотека `osa` не содержит identity или машинных настроек. Сам DMS, greeter,
+системные интеграции, mutable settings и значения из глобальных `osa.*`
+находятся в OSA под интерфейсом `myconfig.osa.de.dms.*`. Здесь поверх него
+задаются только субъективные bar/widget presets.
 
-## Enabling this configuration
+## Обычное использование
 
-Add both `osa` and this flake as inputs, and feed their module dirs into
-denix alongside your host's own:
+Репозиторий самодостаточен как host flake:
+
+```bash
+sudo nixos-rebuild switch --flake .#nixlaptop
+home-manager switch --flake .#nixlaptop
+```
+
+Доступные конфигурации и installer packages:
+
+```bash
+nix flake show
+nix build .#nixlaptop-niri-installer
+```
+
+## Расширение из отдельного репозитория
+
+Публичная функция `lib.mkConfigurations` позволяет подключить этот репозиторий
+целиком и добавить поверх него свои настройки и хосты:
 
 ```nix
-inputs = {
-  osa.url = "github:krozzzis/osa";
-  osa-user.url = "github:krozzzis/osa-krozzzis";
-  # osa-user's own flake-file.inputs already points `osa` at github:krozzzis/osa
-};
+{
+  inputs.osa-krozzzis.url = "github:krozzzis/osa-krozzzis";
 
-# in outputs:
-paths = [
-  ./hosts
-  "${osa}/modules"
-  "${osa-user}/modules"
-  "${osa-user}/rices"
-];
-```
+  outputs = inputs:
+    inputs.osa-krozzzis.lib.mkConfigurations {
+      moduleDirs = [
+        ./modules
+        ./rices
+        ./hosts
+      ];
 
-(`osa-hosts` does this today — see its `flake-file.nix` for the working
-wiring, including the `subpath`/`filteredDir` helpers needed because
-`paths` spans three separate flakes' store trees.)
+      # Даёт добавленным модулям доступ к inputs текущего флейка.
+      extraInputs = inputs;
+      homeManagerUser = "my-user";
 
-### Shell-only (server) profile
-
-For a headless/CLI machine, enable just the shell layer:
-
-```nix
-myconfig.user.shell.enable = true;
-```
-
-This pulls in the `osa.shell.*` CLI utilities (fish/zsh, eza, fzf, ripgrep,
-...) with no desktop environment. `user.server.enable = true` is a step
-further: it turns on `user.shell` plus OpenSSH (key-only, no password/root
-login) — appropriate for a machine you only ever reach over SSH.
-
-### GUI (desktop) profile
-
-```nix
-myconfig.user.desktop.enable = true;
-```
-
-`user.desktop` is a meta-toggle that enables both `user.gui` and
-`user.shell`. `user.gui.enable` on its own turns on GUI-flavored modules
-(most `osa.apps`/`osa.media`/`osa.browser`/`osa.ai` modules default to
-`myconfig.user.gui.enable`, so enabling GUI mode brings in a full desktop
-app set unless you disable specific modules per-host). You then also need
-a **rice** to actually get a desktop environment — GUI mode alone doesn't
-pick one:
-
-```nix
-rice = "niri";       # or "hyprland", "xfce", "caelestia"
-```
-
-set on the `delib.host` in your hosts flake. Rices turn on the matching
-`osa.de.*` module (and, for niri, the DMS shell + walker launcher; for
-hyprland/caelestia, SDDM + a polkit agent).
-
-### Applying to a host
-
-A full example (abbreviated from `osa-hosts/hosts/nixlaptop/default.nix`):
-
-```nix
-{ delib, lib, ... }:
-delib.host {
-  name = "nixlaptop";
-  rice = "niri";
-
-  myconfig = { myconfig, ... }: {
-    user.dev.enable = true;
-    user.desktop.enable = true;
-
-    user.shell.default = myconfig.osa.shell.fish;
-    user.editor.default = myconfig.osa.editor.nixvim;
-    user.browser.default = myconfig.osa.browser.zenBrowser;
-    # ... user.fileManager.default, user.imageViewer.default, etc.
-
-    osa.editor.nixvim.enable = true;
-    # ... turn individual osa.* modules on/off per-host
-  };
-
-  home.home.stateVersion = "26.05";
-  nixos.system.stateVersion = "26.05";
+      # Для headless-хостов не экспортируются бессмысленные host-rice пары.
+      hostsWithoutRices = [ "pi-backup" "my-server" ];
+    };
 }
 ```
 
-`user.*.default` options (terminal/editor/browser/fileManager/musicPlayer/
-videoPlayer/...) pick which enabled `osa.*` module's package backs that
-role — set per-host since e.g. eeepc prefers `vim` over `nixvim` for a
-lighter footprint.
+По умолчанию при этом остаются доступны существующие модули, rices и хосты
+krozzzis. Для независимых реализаций есть два переключателя:
+
+```nix
+inputs.osa-krozzzis.lib.mkConfigurations {
+  includePersonal = false; # не подключать modules/ и rices/ krozzzis
+  includeHosts = false;    # не подключать hosts/ krozzzis
+  moduleDirs = [ ./modules ./rices ./hosts ];
+  extraInputs = inputs;
+  homeManagerUser = "my-user";
+}
+```
+
+Так можно использовать только композиционный механизм и OSA, взять персональный
+слой krozzzis со своими хостами или расширить весь готовый набор.
+
+Новые flake inputs объявляются в `inputs.nix` рядом с модулем. После изменения
+`inputs.nix` или `flake-file.nix` запусти:
+
+```bash
+nix run .#write-flake
+nix flake lock
+```
+
+## Хосты
+
+- `nixlaptop` — основной desktop, niri+DMS primary.
+- `eeepc` — облегчённая конфигурация старого netbook.
+- `pi-backup` — headless Raspberry Pi backup server.

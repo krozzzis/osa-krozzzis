@@ -1,17 +1,119 @@
-{ lib, ... }:
+{ inputs, lib, ... }:
 let
   flakeInputs = import ./lib/flake-inputs.nix { inherit lib; };
-  moduleDirs = [
-    ./modules
-    ./rices
-  ];
+
+  subpath = input: path: /. + (builtins.unsafeDiscardStringContext (input.outPath + path));
+
+  filteredDir =
+    dir:
+    /.
+    + (builtins.unsafeDiscardStringContext (
+      builtins.path {
+        path = dir;
+        filter = path: _type: baseNameOf path != "inputs.nix";
+      }
+    ));
+
+  realOutputs =
+    { denix, osa, ... }@inputs:
+    let
+      nixpkgsLib = inputs.nixpkgs.lib;
+      osaRoot = filteredDir (subpath osa "");
+      personalRoot = filteredDir ./.;
+
+      # Public composition point for downstream modules and hosts.
+      mkConfigurations =
+        {
+          moduleDirs ? [ ],
+          extraInputs ? { },
+          homeManagerUser ? "krozzzis",
+          includePersonal ? true,
+          includeHosts ? true,
+          hostsWithoutRices ? [ "pi-backup" ],
+        }:
+        let
+          moduleInputs = inputs // extraInputs;
+          localDirs =
+            nixpkgsLib.optionals includeHosts [ (personalRoot + "/hosts") ]
+            ++ nixpkgsLib.optionals includePersonal [
+              (personalRoot + "/modules")
+              (personalRoot + "/rices")
+            ];
+          paths = [ (osaRoot + "/modules") ] ++ localDirs ++ map filteredDir moduleDirs;
+
+          mkFor =
+            moduleSystem:
+            denix.lib.configurations {
+              inherit moduleSystem homeManagerUser paths;
+              extensions = with denix.lib.extensions; [
+                args
+                (base.withConfig { args.enable = true; })
+              ];
+              specialArgs.inputs = moduleInputs;
+            };
+
+          isRiceVariant =
+            prefix: name:
+            nixpkgsLib.any (host: nixpkgsLib.hasPrefix "${prefix}${host}-" name) hostsWithoutRices;
+          nixosConfigurationsBase = nixpkgsLib.filterAttrs (name: _cfg: !(isRiceVariant "" name)) (
+            mkFor "nixos"
+          );
+          homeConfigurations = nixpkgsLib.filterAttrs (
+            name: _cfg: !(isRiceVariant "${homeManagerUser}@" name)
+          ) (mkFor "home");
+          isInstallable =
+            _name: cfg:
+            let
+              system = cfg.config.nixpkgs.hostPlatform.system;
+            in
+            (system == "x86_64-linux" || system == "i686-linux")
+            && (cfg.config ? disko)
+            && cfg.config.disko.devices.disk != { };
+          installableTargets = nixpkgsLib.filterAttrs isInstallable nixosConfigurationsBase;
+          mkInstaller = import ./lib/installer.nix { inputs = moduleInputs; };
+          installerConfigurations = nixpkgsLib.mapAttrs' (
+            name: target:
+            nixpkgsLib.nameValuePair "${name}-installer" (mkInstaller {
+              targetName = name;
+              inherit target;
+            })
+          ) installableTargets;
+          installerPackages = nixpkgsLib.foldl' (
+            acc: name:
+            let
+              target = installableTargets.${name};
+              system = target.config.nixpkgs.hostPlatform.system;
+            in
+            nixpkgsLib.recursiveUpdate acc {
+              ${system}."${name}-installer" =
+                installerConfigurations."${name}-installer".config.system.build.isoImage;
+            }
+          ) { } (builtins.attrNames installableTargets);
+        in
+        {
+          nixosConfigurations = nixosConfigurationsBase // installerConfigurations;
+          inherit homeConfigurations;
+          packages = installerPackages;
+        };
+
+      ownConfigurations = mkConfigurations { };
+    in
+    ownConfigurations
+    // {
+      lib = { inherit mkConfigurations; };
+    };
 in
 {
-  description = "osa-user -- krozzzis's personal config (identity, desktop/server profiles, rice presets, dotfiles) built on top of the osa module library.";
+  description = "osa-krozzzis -- composable personal configuration and host flake built on OSA.";
 
-  imports = flakeInputs.importModules moduleDirs;
+  imports =
+    flakeInputs.importModules [
+      ./modules
+      ./rices
+      ./hosts
+    ]
+    ++ lib.optionals (inputs ? osa) (flakeInputs.importModules [ (subpath inputs.osa "/modules") ]);
 
-  # See ../osa/flake-file.nix for why this shim looks like this.
   flake-file.outputs = ''
     inputs:
       let
@@ -19,9 +121,12 @@ in
           specialArgs = { inherit inputs; inherit (inputs) self; };
           modules = [ inputs.flake-file.flakeModules.flake ./flake-file.nix ];
         };
-        base = evaluated.config.outputs inputs;
         system = "x86_64-linux";
         pkgs = import inputs.nixpkgs { inherit system; };
+        haveAllInputs = builtins.all (name: inputs ? ''${name}) (
+          builtins.attrNames evaluated.config.flake-file.inputs
+        );
+        base = if haveAllInputs then evaluated.config.outputs inputs else { };
       in
       base // {
         packages = (base.packages or { }) // {
@@ -37,32 +142,20 @@ in
       }
   '';
 
-  # Bootstrap set: nixpkgs/home-manager/denix/flake-file (needed to eval at
-  # all) plus osa itself (this flake's modules read/extend `osa.*` options
-  # declared there). Everything a dotfiles/rice module needs beyond that
-  # would get its own sibling inputs.nix, same as in osa -- none currently
-  # do (they only reference `myconfig.osa.*`, not raw flake inputs).
   flake-file.inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
     denix = {
       url = "github:yunfachi/denix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
-
     flake-file.url = "github:vic/flake-file";
-
     osa.url = "github:krozzzis/osa";
   };
 
-  # Like osa itself, this flake doesn't build nixosConfigurations -- it's a
-  # module library consumed via `${inputs.osa-user}/modules` +
-  # `${inputs.osa-user}/rices` by whatever flake owns the hosts.
-  outputs = _inputs: { };
+  outputs = realOutputs;
 }
