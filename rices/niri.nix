@@ -1,9 +1,8 @@
 { delib, ... }:
 delib.rice {
   name = "niri";
-  inherits = [ "all" ];
 
   myconfig = {
-    osa.de.rice.primary = "niri";
+    osa.de.rice.niri.enable = true;
   };
 }

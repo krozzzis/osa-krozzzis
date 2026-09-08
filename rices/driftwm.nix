@@ -1,9 +1,11 @@
 { delib, ... }:
 delib.rice {
   name = "driftwm";
-  inherits = [ "all" ];
+  # Keep the complete Niri+DMS session installed as a fallback.
+  inherits = [ "niri" ];
 
   myconfig = {
     osa.de.rice.primary = "driftwm";
+    osa.de.rice.driftwm.enable = true;
   };
 }

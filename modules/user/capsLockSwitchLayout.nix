@@ -4,11 +4,5 @@ delib.module {
 
   options = delib.singleEnableOption true;
 
-  nixos.ifEnabled = {
-    services.xserver.xkb.options = "grp:caps_toggle";
-  };
-
-  myconfig.ifEnabled.osa.de.driftwm.settings.input.keyboard.options = "grp:caps_toggle";
-
-  home.ifEnabled.programs.niri.settings.input.keyboard.xkb.options = "grp:caps_toggle";
+  myconfig.ifEnabled.user.input.keyboard.options = "grp:caps_toggle";
 }
