@@ -11,8 +11,16 @@ delib.module {
     {
       osa.de.dms.settings = {
         notificationHistoryEnabled = false;
+        notificationOverlayEnabled = true;
+        notificationFocusedMonitor = true;
+        lockScreenNotificationMode = 1;
+
+        notificationTimeoutCritical = 15000;
+        notificationShowTimeoutBar = true;
+
         updaterHideWidget = true;
-        workspaceOccupiedColorMode = "s";
+        workspaceOccupiedColorMode = "secondaryContainer";
+        workspaceUnfocusedColorMode = "schh";
 
         controlCenterWidgets = [
           {
@@ -132,8 +140,8 @@ delib.module {
             scrollXBehavior = "column";
             scrollYBehavior = "workspace";
             shadowIntensity = 0;
-            spacing = 4;
-            squareCorners = false;
+            spacing = 0;
+            squareCorners = true;
             inherit transparency;
             visible = true;
             widgetOutlineColor = "primary";

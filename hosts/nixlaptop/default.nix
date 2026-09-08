@@ -19,14 +19,14 @@ delib.host {
     osa.browser.firefox.enable = true;
     osa.browser.librewolf.enable = false;
     user.browser.default = lib.mkForce myconfig.osa.browser.zenBrowser;
-    osa.media.reaper.enable = true;
-    osa.media.patchbay.enable = true;
+    osa.media.reaper.enable = false;
+    osa.media.patchbay.enable = false;
     osa.terminal.wezterm.enable = true;
     osa.apps.wireshark.enable = true;
     osa.apps.swayimg.enable = true;
-    osa.apps.qpwgraph.enable = true;
-    osa.apps.cosmic.enable = true;
-    osa.apps.arduinoIde.enable = true;
+    osa.apps.qpwgraph.enable = false;
+    osa.apps.cosmic.enable = false;
+    osa.apps.arduinoIde.enable = false;
 
     osa.shell.fzf.enable = true;
     osa.shell.fastfetch.enable = true;
