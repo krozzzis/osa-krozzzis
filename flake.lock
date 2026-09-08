@@ -83,7 +83,10 @@
           "osa",
           "nixpkgs"
         ],
-        "quickshell": "quickshell"
+        "quickshell": [
+          "osa",
+          "quickshell"
+        ]
       },
       "locked": {
         "lastModified": 1788804602,
@@ -256,11 +259,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1788802123,
-        "narHash": "sha256-RXaZENPMZ5NJ15EiyheNiEZ7QtjxTJaoJqo6K6R4vY0=",
+        "lastModified": 1788833423,
+        "narHash": "sha256-QLPfYqvEBlduLcVtMFi00LeTFP/du+y9X1lmhqQ8JsI=",
         "owner": "AvengeMedia",
         "repo": "dms-plugin-registry",
-        "rev": "8670f2145dee4c0080d2252a945b78aecc9da206",
+        "rev": "61c22c96b624feb0ee38d65dae7d93ff9271a7b9",
         "type": "github"
       },
       "original": {
@@ -1317,6 +1320,7 @@
         "nixvim": "nixvim_2",
         "ntfsplus": "ntfsplus_2",
         "plymouth-theme-material": "plymouth-theme-material",
+        "quickshell": "quickshell",
         "rip": "rip",
         "silentSDDM": "silentSDDM",
         "walker": "walker",
@@ -1324,12 +1328,13 @@
         "zen-browser": "zen-browser"
       },
       "locked": {
-        "lastModified": 1788847389,
-        "narHash": "sha256-ww6UI97T1jf3gbbf63TsDx2fQh2rAHE5qj7GDO/9TwM=",
-        "owner": "krozzzis",
-        "repo": "osa",
-        "rev": "805a3ab8811577270f7a73ad637b846b27633a72",
-        "type": "github"
+        "lastModified": 1788870842,
+        "narHash": "sha256-+6JEtVtYcnTscWCGG4xiDgRPNeRybUJ1SglRvdvcVV0=",
+        "ref": "refs/heads/main",
+        "rev": "b3dfb0e580c3fef6d389eca7cf9e5c0dc781494e",
+        "revCount": 80,
+        "type": "git",
+        "url": "file:///home/krozzzis/osa"
       },
       "original": {
         "owner": "krozzzis",
@@ -1422,7 +1427,6 @@
       "inputs": {
         "nixpkgs": [
           "osa",
-          "caelestia-shell",
           "nixpkgs"
         ]
       },
