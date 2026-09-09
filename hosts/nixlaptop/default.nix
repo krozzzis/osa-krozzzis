@@ -17,6 +17,7 @@ delib.host {
     osa.editor.nixvim.enable = true;
     osa.browser.zenBrowser.enable = true;
     osa.browser.firefox.enable = true;
+    osa.browser.chromium.enable = true;
     osa.browser.librewolf.enable = false;
     user.browser.default = lib.mkForce myconfig.osa.browser.zenBrowser;
     osa.media.reaper.enable = false;
