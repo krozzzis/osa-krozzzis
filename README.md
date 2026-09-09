@@ -26,18 +26,24 @@ lib/installer.nix  генерация offline installer ISO
 
 ## Обычное использование
 
-Репозиторий самодостаточен как host flake:
+Репозиторий самодостаточен как host flake. Установленный модулем
+`osa.system.osa-cli` CLI по умолчанию работает именно с `~/osa-user`:
 
 ```bash
-sudo nixos-rebuild switch --flake .#nixlaptop
-home-manager switch --flake .#nixlaptop
+osa update
+osa switch nixlaptop-niri
+osa update-switch --run0 nixlaptop-niri
+osa update-boot --config ~/osa-user nixlaptop-niri
 ```
 
-Доступные конфигурации и installer packages:
+Без `--run0` привилегированный этап выполняется через `sudo`; с `--run0` CLI
+использует интерактивный launcher systemd. Сборка готовых образов и installer
+packages также доступна через CLI:
 
 ```bash
 nix flake show
-nix build .#nixlaptop-niri-installer
+osa build-iso pi-backup
+osa build-installer nixlaptop-niri
 ```
 
 ## Расширение из отдельного репозитория
