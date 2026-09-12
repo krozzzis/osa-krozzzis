@@ -1403,11 +1403,11 @@
         "zen-browser": "zen-browser"
       },
       "locked": {
-        "lastModified": 1789203279,
-        "narHash": "sha256-KiN9+DlnAmCfgQthluchugGisNLSZKamKd+AnMw5uRk=",
+        "lastModified": 1789208019,
+        "narHash": "sha256-VesIZnJinxmPyLbQuZ0ce2i+gMbJI8DFjX1p7uTanMc=",
         "owner": "krozzzis",
         "repo": "osa",
-        "rev": "bc82efd2c5f12826f04e2e263116b129b660e045",
+        "rev": "7fa7412ede19c83742783566f5b886de97335dee",
         "type": "github"
       },
       "original": {
@@ -1424,11 +1424,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789203207,
-        "narHash": "sha256-8Xs22idH0wdvBpP1vPg4Z9zSH4P7C6eb9M+xDTlpHk4=",
+        "lastModified": 1789207938,
+        "narHash": "sha256-TzRKySl6fEfuVOZpvjXJsofrd8JPH7OGc5ZTuUOgu2U=",
         "owner": "krozzzis",
         "repo": "plymouth-theme-material",
-        "rev": "6614345c37a8beada650fc0540fcdc511a38bb33",
+        "rev": "cb09c140ba0ff538ff54b78788db6612c3bd026e",
         "type": "github"
       },
       "original": {
@@ -1444,11 +1444,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1789203207,
-        "narHash": "sha256-8Xs22idH0wdvBpP1vPg4Z9zSH4P7C6eb9M+xDTlpHk4=",
+        "lastModified": 1789207938,
+        "narHash": "sha256-TzRKySl6fEfuVOZpvjXJsofrd8JPH7OGc5ZTuUOgu2U=",
         "owner": "krozzzis",
         "repo": "plymouth-theme-material",
-        "rev": "6614345c37a8beada650fc0540fcdc511a38bb33",
+        "rev": "cb09c140ba0ff538ff54b78788db6612c3bd026e",
         "type": "github"
       },
       "original": {
