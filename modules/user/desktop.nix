@@ -10,6 +10,7 @@ delib.module {
   myconfig.ifEnabled = { myconfig, ... }: {
     user = {
       gui.enable = true;
+      ui.workspaces = map toString (lib.range 0 9);
       shell = {
         enable = true;
         default = lib.mkDefault myconfig.osa.shell.fish;

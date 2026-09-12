@@ -95,30 +95,6 @@ delib.module {
       (wm // { key = "TouchpadScrollDown"; cooldownMs = 150; action = { focus-workspace-down = [ ]; }; })
       (wm // { key = "TouchpadScrollUp";   cooldownMs = 150; action = { focus-workspace-up = [ ]; }; })
 
-      # -- workspace focus
-      (wm // { key = "1"; action = { focus-workspace = 1; }; })
-      (wm // { key = "2"; action = { focus-workspace = 2; }; })
-      (wm // { key = "3"; action = { focus-workspace = 3; }; })
-      (wm // { key = "4"; action = { focus-workspace = 4; }; })
-      (wm // { key = "5"; action = { focus-workspace = 5; }; })
-      (wm // { key = "6"; action = { focus-workspace = 6; }; })
-      (wm // { key = "7"; action = { focus-workspace = 7; }; })
-      (wm // { key = "8"; action = { focus-workspace = 8; }; })
-      (wm // { key = "9"; action = { focus-workspace = 9; }; })
-      (wm // { key = "0"; action = { focus-workspace = 10; }; })
-
-      # -- move to workspace
-      (wmShift // { key = "1"; action = { move-column-to-workspace = 1; }; })
-      (wmShift // { key = "2"; action = { move-column-to-workspace = 2; }; })
-      (wmShift // { key = "3"; action = { move-column-to-workspace = 3; }; })
-      (wmShift // { key = "4"; action = { move-column-to-workspace = 4; }; })
-      (wmShift // { key = "5"; action = { move-column-to-workspace = 5; }; })
-      (wmShift // { key = "6"; action = { move-column-to-workspace = 6; }; })
-      (wmShift // { key = "7"; action = { move-column-to-workspace = 7; }; })
-      (wmShift // { key = "8"; action = { move-column-to-workspace = 8; }; })
-      (wmShift // { key = "9"; action = { move-column-to-workspace = 9; }; })
-      (wmShift // { key = "0"; action = { move-column-to-workspace = 10; }; })
-
       # -- column/window actions
       (wm // { key = "Comma";       action = { consume-or-expel-window-left = [ ]; }; })
       (wm // { key = "Period";      action = { consume-or-expel-window-right = [ ]; }; })
