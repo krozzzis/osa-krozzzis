@@ -4,6 +4,9 @@
   pkgs,
   ...
 }:
+let
+  uiFontSize = 11;
+in
 delib.module {
   name = "user.fonts";
 
@@ -75,7 +78,7 @@ delib.module {
       enable = true;
       font = {
         name = myconfig.user.fonts.regular.name;
-        size = 11;
+        size = uiFontSize;
       };
       iconTheme = {
         package = lib.mkForce myconfig.user.ui.iconTheme.pkg;
@@ -87,6 +90,25 @@ delib.module {
       enable = true;
       platformTheme.name = "qtct";
     };
+
+    # Niri uses the KDE Qt platform theme, so set every KDE/Qt UI font role
+    # explicitly instead of falling back to Qt's default 12-point font.
+    xdg.configFile."kdeglobals".text =
+      let
+        font = "${myconfig.user.fonts.regular.name},${toString uiFontSize},-1,5,50,0,0,0,0,0";
+        fixedFont = "${myconfig.user.fonts.monospace.name},${toString uiFontSize},-1,5,50,0,0,0,0,0";
+      in
+      ''
+        [General]
+        fixed=${fixedFont}
+        font=${font}
+        menuFont=${font}
+        smallestReadableFont=${font}
+        toolBarFont=${font}
+
+        [WM]
+        activeFont=${font}
+      '';
 
     home.packages = with pkgs; [
       myconfig.user.fonts.regular.pkg
