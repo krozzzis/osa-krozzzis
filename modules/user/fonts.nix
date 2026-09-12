@@ -1,4 +1,9 @@
-{ delib, lib, pkgs, ... }:
+{
+  delib,
+  lib,
+  pkgs,
+  ...
+}:
 delib.module {
   name = "user.fonts";
 
@@ -6,7 +11,7 @@ delib.module {
     user.fonts.enable = delib.boolOption true;
   };
 
-  # Устанавливаем глобальные шрифты как просили: Inter + JetBrains Mono
+  # These handles are the single source of truth for system and application fonts.
   myconfig.always = {
     user.fonts.regular = {
       pkg = pkgs.inter;
@@ -19,41 +24,62 @@ delib.module {
   };
 
   nixos.ifEnabled = { myconfig, ... }: {
-    fonts.packages = with pkgs; [
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-cjk-serif
-      noto-fonts-color-emoji
-      liberation_ttf
-      twemoji-color-font
-      myconfig.user.fonts.regular.pkg
-      myconfig.user.fonts.monospace.pkg
-    ] ++ lib.optionals myconfig.user.gui.fonts.nerdfonts [
-      nerd-fonts.fira-code
-      nerd-fonts.jetbrains-mono
-      nerd-fonts.symbols-only
-    ];
+    fonts.packages =
+      with pkgs;
+      [
+        noto-fonts
+        noto-fonts-cjk-sans
+        noto-fonts-cjk-serif
+        noto-fonts-color-emoji
+        liberation_ttf
+        twemoji-color-font
+        myconfig.user.fonts.regular.pkg
+        myconfig.user.fonts.monospace.pkg
+      ]
+      ++ lib.optionals myconfig.user.gui.fonts.nerdfonts [
+        nerd-fonts.fira-code
+        nerd-fonts.jetbrains-mono
+        nerd-fonts.symbols-only
+      ];
 
     fonts.fontconfig = {
       defaultFonts = {
-        serif     = [ "Noto Serif" "Noto Serif CJK SC" ];
-        sansSerif = [ myconfig.user.fonts.regular.name "Noto Sans CJK SC" ];
+        serif = [
+          "Noto Serif"
+          "Noto Serif CJK SC"
+        ];
+        sansSerif = [
+          myconfig.user.fonts.regular.name
+          "Noto Sans CJK SC"
+        ];
         monospace = [
-          (if myconfig.user.gui.fonts.nerdfonts then "JetBrainsMono Nerd Font" else myconfig.user.fonts.monospace.name)
+          (
+            if myconfig.user.gui.fonts.nerdfonts then
+              "JetBrainsMono Nerd Font"
+            else
+              myconfig.user.fonts.monospace.name
+          )
           "Noto Sans Mono CJK SC"
         ];
-        emoji     = [ "Twemoji Mozilla" "Noto Color Emoji" ];
+        emoji = [
+          "Twemoji Mozilla"
+          "Noto Color Emoji"
+        ];
       };
     };
   };
 
   home.ifEnabled = { myconfig, ... }: {
-    # GTK / Qt — чтобы все приложения брали тот же шрифт, а не только fontconfig
+    # Configure toolkits as well as fontconfig so GUI applications agree.
     gtk = {
       enable = true;
       font = {
         name = myconfig.user.fonts.regular.name;
         size = 11;
+      };
+      iconTheme = {
+        package = lib.mkForce myconfig.user.ui.iconTheme.pkg;
+        name = lib.mkForce myconfig.user.ui.iconTheme.name;
       };
     };
 

@@ -22,17 +22,20 @@ delib.module {
     };
   };
 
-  nixos.always = { myconfig, ... }: let
-    inherit (myconfig.user.constants) username;
-    avatar = myconfig.osa.user.avatar;
-  in {
-    # Как в Gnome/Windows: аватар лежит в системе (/var/lib/AccountsService),
-    # доступен гритеру до первого логина. home.file — для лок-скрина.
-    services.accounts-daemon.enable = true;
-    systemd.tmpfiles.rules = [
-      "C+ /home/${username}/.face - - - - ${avatar}"
-      "d /var/lib/AccountsService/icons 0755 root root -"
-      "C+ /var/lib/AccountsService/icons/${username} - - - - ${avatar}"
-    ];
-  };
+  nixos.always =
+    { myconfig, ... }:
+    let
+      inherit (myconfig.user.constants) username;
+      avatar = myconfig.osa.user.avatar;
+    in
+    {
+      # AccountsService stores the avatar system-wide so greeters can display it
+      # before the first login; Home Manager copies cover lock-screen consumers.
+      services.accounts-daemon.enable = true;
+      systemd.tmpfiles.rules = [
+        "C+ /home/${username}/.face - - - - ${avatar}"
+        "d /var/lib/AccountsService/icons 0755 root root -"
+        "C+ /var/lib/AccountsService/icons/${username} - - - - ${avatar}"
+      ];
+    };
 }

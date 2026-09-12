@@ -1,104 +1,61 @@
 # osa-krozzzis
 
-Персональная конфигурация krozzzis и реальные хосты в одном composable-флейке,
-построенном поверх [osa](https://github.com/krozzzis/osa).
+Personal settings and real hosts composed on top of
+[OSA](https://github.com/krozzzis/osa). The flake exports NixOS and Home
+Manager configurations plus offline installer packages while keeping reusable
+OSA modules, personal preferences and host hardware in separate layers.
 
-Флейк сразу экспортирует `nixosConfigurations`, `homeConfigurations` и
-offline installer packages. При этом границы слоёв сохранены: базовая библиотека
-OSA, персональные модули/rices и хосты остаются отдельными каталогами и могут
-заменяться независимо.
+## Layout
 
-## Структура
-
-```
-modules/user/      identity, профили, default apps, шрифты и shortcuts
-modules/dotfiles/  nixvim, starship, wezterm
-modules/dms/       только персональная косметика DMS (bar/widgets/control center)
-rices/             выбор primary session и набор персональных desktop bundles
-hosts/             nixlaptop, eeepc, pi-backup
-lib/installer.nix  генерация offline installer ISO
+```text
+modules/user/      identity, profiles, default applications, fonts and shortcuts
+modules/dotfiles/  personal application settings
+modules/dms/       cosmetic DMS bar, widget and control-center presets
+rices/             desktop bundles and primary-session selection
+hosts/             hardware, storage, networking and boot configuration
+lib/installer.nix  offline installer image builder
 ```
 
-Библиотека `osa` не содержит identity или машинных настроек. Сам DMS, greeter,
-системные интеграции, mutable settings и значения из глобальных `osa.*`
-находятся в OSA под интерфейсом `myconfig.osa.de.dms.*`. Здесь поверх него
-задаются только субъективные bar/widget presets.
+OSA owns DMS packages, greeter and system integration, mutable settings
+machinery and global UI defaults. This repository only supplies subjective
+presets and machine-specific values.
 
-## Обычное использование
+## Usage
 
-Репозиторий самодостаточен как host flake. Установленный модулем
-`osa.system.osa-cli` CLI по умолчанию работает именно с `~/osa-user`:
+The `osa` CLI uses `~/osa-user` by default:
 
 ```bash
 osa update
 osa switch nixlaptop-niri
-osa update-switch --run0 nixlaptop-niri
-osa update-boot --config ~/osa-user nixlaptop-niri
-```
-
-Без `--run0` привилегированный этап выполняется через `sudo`; с `--run0` CLI
-использует интерактивный launcher systemd. Сборка готовых образов и installer
-packages также доступна через CLI:
-
-```bash
-nix flake show
+osa update-switch nixlaptop-niri
 osa build-iso pi-backup
 osa build-installer nixlaptop-niri
 ```
 
-## Расширение из отдельного репозитория
+Run it as the normal user. The CLI elevates only NixOS activation through
+systemd `run0`.
 
-Публичная функция `lib.mkConfigurations` позволяет подключить этот репозиторий
-целиком и добавить поверх него свои настройки и хосты:
+## Composition API
 
-```nix
-{
-  inputs.osa-krozzzis.url = "github:krozzzis/osa-krozzzis";
-
-  outputs = inputs:
-    inputs.osa-krozzzis.lib.mkConfigurations {
-      moduleDirs = [
-        ./modules
-        ./rices
-        ./hosts
-      ];
-
-      # Даёт добавленным модулям доступ к inputs текущего флейка.
-      extraInputs = inputs;
-      homeManagerUser = "my-user";
-
-      # Для headless-хостов не экспортируются бессмысленные host-rice пары.
-      hostsWithoutRices = [ "pi-backup" "my-server" ];
-    };
-}
-```
-
-По умолчанию при этом остаются доступны существующие модули, rices и хосты
-krozzzis. Для независимых реализаций есть два переключателя:
+`lib.mkConfigurations` lets another flake reuse or extend this repository:
 
 ```nix
-inputs.osa-krozzzis.lib.mkConfigurations {
-  includePersonal = false; # не подключать modules/ и rices/ krozzzis
-  includeHosts = false;    # не подключать hosts/ krozzzis
-  moduleDirs = [ ./modules ./rices ./hosts ];
-  extraInputs = inputs;
-  homeManagerUser = "my-user";
-}
+inputs.osa-user.url = "github:krozzzis/osa-krozzzis";
+
+outputs = inputs:
+  inputs.osa-user.lib.mkConfigurations {
+    moduleDirs = [ ./modules ./hosts ];
+    extraInputs = inputs;
+  };
 ```
 
-Так можно использовать только композиционный механизм и OSA, взять персональный
-слой krozzzis со своими хостами или расширить весь готовый набор.
+Set `includePersonal = false` to omit the personal modules and rices, or
+`includeHosts = false` to omit the bundled hosts. New flake inputs belong in an
+`inputs.nix` beside their consumer. Regenerate `flake.nix` after changing an
+input declaration.
 
-Новые flake inputs объявляются в `inputs.nix` рядом с модулем. После изменения
-`inputs.nix` или `flake-file.nix` запусти:
+## Hosts
 
-```bash
-nix run .#write-flake
-nix flake lock
-```
-
-## Хосты
-
-- `nixlaptop` — основной desktop, niri+DMS primary.
-- `eeepc` — облегчённая конфигурация старого netbook.
-- `pi-backup` — headless Raspberry Pi backup server.
+- `nixlaptop`: primary desktop, using Niri and DMS.
+- `eeepc`: lightweight configuration for an older netbook.
+- `pi-backup`: headless backup appliance and image target.

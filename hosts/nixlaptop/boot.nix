@@ -1,4 +1,4 @@
-{ delib, inputs, pkgs, ... }:
+{ delib, ... }:
 delib.host {
   name = "nixlaptop";
 
@@ -15,9 +15,6 @@ delib.host {
       plymouth = {
         enable = true;
         theme = "material";
-        themePackages = [
-          inputs.plymouth-theme-material.packages.${pkgs.stdenv.hostPlatform.system}.plymouth-theme-material
-        ];
       };
 
       # Enable "Silent boot"

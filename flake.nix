@@ -1,4 +1,4 @@
-# DO-NOT-EDIT. This file was auto-generated using github:vic/flake-file.
+# DO-NOT-EDIT. This file was auto-generated using github:denful/flake-file.
 # Use `nix run .#write-flake` to regenerate it.
 {
   description = "osa-krozzzis -- composable personal configuration and host flake built on OSA.";
@@ -44,6 +44,10 @@
         nixpkgs.follows = "nixpkgs";
         quickshell.follows = "quickshell";
       };
+    };
+    conflux-icon-theme = {
+      url = "github:MoshiurRahmanAdib/Conflux-Icon-Theme";
+      flake = false;
     };
     denix = {
       url = "github:yunfachi/denix";
