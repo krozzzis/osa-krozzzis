@@ -82,6 +82,10 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    koala-clash = {
+      url = "github:endotrizine/koala-clash-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     lyrics-visualizer = {
       url = "path:/home/krozzzis/dev/lyrics_vusializer";
       inputs.nixpkgs.follows = "nixpkgs";
