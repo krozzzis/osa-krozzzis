@@ -34,6 +34,7 @@ delib.host {
 
     osa.system.libvirtd.enable = true;
     osa.system.audio.enable = true;
+    osa.system.printing.enable = true;
 
     osa.system.hibernate.enable = true;
     osa.system.hibernate.resumeDevice = "/dev/mapper/cryptroot";
