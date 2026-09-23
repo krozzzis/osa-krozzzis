@@ -28,7 +28,6 @@ delib.host {
     osa.apps.qpwgraph.enable = false;
     osa.apps.cosmic.enable = false;
     osa.apps.arduinoIde.enable = false;
-
     osa.shell.fzf.enable = true;
     osa.shell.fastfetch.enable = true;
 
@@ -47,7 +46,17 @@ delib.host {
   home.home.stateVersion = "26.05";
   home.home.packages = [
     inputs."lyrics-visualizer".packages.${pkgs.stdenv.hostPlatform.system}.default
+    pkgs.obsidian
   ];
+  home.file."Obsidian/.keep".text = "";
+  xdg.desktopEntries.obsidian-vault = {
+    name = "Obsidian (personal vault)";
+    comment = "Open the Obsidian vault in ~/Obsidian";
+    exec = "obsidian --vault=Obsidian";
+    icon = "obsidian";
+    terminal = false;
+    categories = [ "Office" ];
+  };
   nixos.system.stateVersion = "26.05";
 
   nixos = {

@@ -6,7 +6,6 @@ delib.rice {
   myconfig = {
     osa.de.rice.primary = "niri";
     osa.de.rice.niri.enable = true;
-    osa.de.rice.caelestia.enable = true;
     osa.de.rice.driftwm.enable = true;
     osa.de.rice.xfce.enable = true;
   };
