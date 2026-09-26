@@ -1,4 +1,9 @@
-{ delib, lib, pkgs, ... }:
+{
+  delib,
+  lib,
+  pkgs,
+  ...
+}:
 delib.host {
   name = "eeepc";
 
@@ -12,10 +17,14 @@ delib.host {
     user.terminal.default = myconfig.osa.terminal.wezterm;
     user.browser.default = myconfig.osa.browser.zenBrowser;
     user.fileManager.default = myconfig.osa.fileManager.nautilus;
-    user.imageViewer.default = myconfig.osa.apps.swayimg;
-    user.pdfViewer.default = { pkg = pkgs.zathura; };
-    user.musicPlayer.default = { pkg = pkgs.mpv; };
-    user.videoPlayer.default = { pkg = pkgs.mpv; };
+    user.imageViewer.default = myconfig.osa.apps.loupe;
+    user.pdfViewer.default = myconfig.osa.apps.papers;
+    user.musicPlayer.default = {
+      pkg = pkgs.mpv;
+    };
+    user.videoPlayer.default = {
+      pkg = pkgs.mpv;
+    };
 
     osa.shell.fzf.enable = true;
 

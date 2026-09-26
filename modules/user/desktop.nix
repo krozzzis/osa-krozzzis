@@ -18,8 +18,8 @@ delib.module {
       editor.default = lib.mkDefault myconfig.osa.editor.nixvim;
       browser.default = lib.mkDefault myconfig.osa.browser.zenBrowser;
       fileManager.default = lib.mkDefault myconfig.osa.fileManager.nautilus;
-      imageViewer.default = lib.mkDefault myconfig.osa.apps.swayimg;
-      pdfViewer.default = lib.mkDefault myconfig.osa.apps.cosmic.reader;
+      imageViewer.default = lib.mkDefault myconfig.osa.apps.loupe;
+      pdfViewer.default = lib.mkDefault myconfig.osa.apps.papers;
       musicPlayer.default = lib.mkDefault myconfig.osa.media.vlc;
       videoPlayer.default = lib.mkDefault myconfig.osa.media.vlc;
     };

@@ -24,7 +24,14 @@ delib.host {
     osa.media.patchbay.enable = false;
     osa.terminal.wezterm.enable = true;
     osa.apps.wireshark.enable = true;
-    osa.apps.swayimg.enable = true;
+    osa.apps.loupe.enable = true;
+    osa.apps.wine = {
+      enable = true;
+      profiles.wine-ru = {
+        prefix = ".wine-ru";
+        locale = "ru_RU.UTF-8";
+      };
+    };
     osa.apps.qpwgraph.enable = false;
     osa.apps.cosmic.enable = false;
     osa.apps.arduinoIde.enable = false;
@@ -60,6 +67,7 @@ delib.host {
 
     zramSwap.enable = true;
     time.timeZone = "Asia/Yekaterinburg";
+    i18n.extraLocales = [ "ru_RU.UTF-8/UTF-8" ];
 
     swapDevices = [ { device = "/swap/swapfile"; } ];
     boot.kernelParams = [
