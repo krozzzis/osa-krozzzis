@@ -100,8 +100,9 @@ packages with the desktop session. Keep their channels aligned for Qt plugin
 compatibility. The system builder uses OSA's channel-aware composition helper,
 and each offline installer uses its target's selected NixOS release. The stable
 oo7 compatibility module keeps the keyring integration and uses host libraries
-for PAM. Home Manager remains on master for current application options and
-therefore emits a release-version warning on stable hosts.
+for PAM. Home Manager follows the system release: `release-26.05` on stable,
+master on unstable. Application package channels remain independent, and the
+Home Manager release check stays enabled.
 
 ## Binary caches
 

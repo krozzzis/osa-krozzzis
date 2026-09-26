@@ -79,6 +79,8 @@ Standalone Home Manager uses its host daemon's caches.
 
 After channel/cache changes, evaluate the affected desktop and `pi-backup`,
 check installer release/cache settings, run the generated-flake sync check and
-`git diff --check`. OSA's flake check covers both system channels. Home Manager
-currently remains on master, so stable hosts emit a release-version warning;
-evaluation checks do not claim a successful runtime activation.
+`git diff --check`. OSA's flake check covers both system channels. Its composition
+builder selects Home Manager with the same release as system nixpkgs, using
+`home-manager-stable` for 26.05 and `home-manager` for unstable. Do not disable
+the release check; add a matching Home Manager input for new system releases.
+Evaluation checks do not claim a successful runtime activation.
