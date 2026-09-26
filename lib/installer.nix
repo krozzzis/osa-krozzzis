@@ -25,7 +25,9 @@
   target,
 }:
 let
-  lib = inputs.nixpkgs.lib;
+  sources = import "${inputs.osa}/lib/nixpkgs-sources.nix" { inherit inputs; };
+  nixpkgs = sources.${target.config.myconfig.osa.system.nixpkgs};
+  lib = nixpkgs.lib;
   pkgs = target.pkgs;
 
   diskName = builtins.head (builtins.attrNames target.config.disko.devices.disk);

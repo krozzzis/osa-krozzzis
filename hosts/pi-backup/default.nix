@@ -47,7 +47,7 @@ delib.host {
 
     # Unbounded journald on an SD card is a slow-motion full-disk problem on
     # a box nobody is watching.
-    services.journald.settings.Journal.SystemMaxUse = "200M";
+    services.journald.extraConfig = "SystemMaxUse=200M";
 
     # RPi 3's bcm2835 watchdog hardware caps out well under a minute, so keep
     # the timeout short; this just forces a reboot if the box wedges instead

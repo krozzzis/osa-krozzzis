@@ -43,7 +43,7 @@ let
 
           mkFor =
             moduleSystem:
-            denix.lib.configurations {
+            (import (osaRoot + "/lib/configurations.nix") { inputs = moduleInputs; }) {
               inherit moduleSystem homeManagerUser paths;
               extensions = with denix.lib.extensions; [
                 args
@@ -143,7 +143,9 @@ in
   '';
 
   flake-file.inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.follows = "nixpkgs-stable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
