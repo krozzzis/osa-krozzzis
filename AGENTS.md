@@ -84,5 +84,6 @@ builder selects Home Manager with the same release as system nixpkgs, using
 `home-manager-stable` for 26.05 and `home-manager` for unstable. Do not disable
 the release check; add a matching Home Manager input for new system releases.
 Fish completion compatibility belongs in OSA; keep generation enabled when
-using unstable Fish with stable Home Manager. OSA has a build check for this.
+using unstable Fish with stable NixOS and Home Manager. These have separate
+generators, and OSA builds both in its compatibility check.
 Evaluation checks do not claim a successful runtime activation.
