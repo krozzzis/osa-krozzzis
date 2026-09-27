@@ -83,4 +83,6 @@ check installer release/cache settings, run the generated-flake sync check and
 builder selects Home Manager with the same release as system nixpkgs, using
 `home-manager-stable` for 26.05 and `home-manager` for unstable. Do not disable
 the release check; add a matching Home Manager input for new system releases.
+Fish completion compatibility belongs in OSA; keep generation enabled when
+using unstable Fish with stable Home Manager. OSA has a build check for this.
 Evaluation checks do not claim a successful runtime activation.
