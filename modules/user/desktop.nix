@@ -17,6 +17,7 @@ delib.module {
       };
       editor.default = lib.mkDefault myconfig.osa.editor.nixvim;
       browser.default = lib.mkDefault myconfig.osa.browser.zenBrowser;
+      taskManager.default = lib.mkDefault myconfig.osa.taskManager.missionCenter;
       fileManager.default = lib.mkDefault myconfig.osa.fileManager.nautilus;
       imageViewer.default = lib.mkDefault myconfig.osa.apps.loupe;
       pdfViewer.default = lib.mkDefault myconfig.osa.apps.papers;
@@ -25,6 +26,10 @@ delib.module {
     };
 
     osa = {
+      taskManager.missionCenter.enable = true;
+      apps.foliate.enable = true;
+      fileManager.dolphin.enable = true;
+      fileManager.flux.enable = true;
       system.ntfs.enable = false;
       media = {
         musescore.enable = true;

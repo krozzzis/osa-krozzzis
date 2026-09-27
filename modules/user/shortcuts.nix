@@ -121,6 +121,7 @@ delib.module {
       { mod = [ "Ctrl" "Alt" ]; key = "Delete"; action = { quit = [ ]; }; }
 
       # -- app spawns
+      { mod = [ "Ctrl" "Shift" ]; key = "Escape"; action = { spawn = [ (lib.getExe myconfig.user.taskManager.default.pkg) ]; }; title = "Open Task Manager"; }
       (wm // { key = "Return"; action = app myconfig.user.terminal.default.pkg; title = "Open Terminal"; })
       (wm // { key = "P";      action = app myconfig.osa.de.niri.launcher.default.pkg; title = "Open Launcher"; })
       (wm // { key = "E";      action = app myconfig.user.fileManager.default.pkg; title = "Open File Manager"; })
