@@ -107,6 +107,8 @@ an embedded manpage completion generator in both NixOS and Home Manager, so
 Fish can stay on unstable while the system and Home Manager follow stable.
 Throne's TUN wrapper follows its application package layout; Niri's system
 portal backends use the system channel to avoid duplicate service units.
+Throne's DNS setup and reset use the capability-based polkit authorization
+provided by OSA, including the missing DNS revert action on stable NixOS.
 
 ## Binary caches
 
