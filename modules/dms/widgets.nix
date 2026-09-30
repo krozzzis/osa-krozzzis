@@ -1,4 +1,4 @@
-{ delib, lib, ... }:
+{ delib, ... }:
 delib.module {
   name = "osa.de.dms";
 
@@ -6,15 +6,10 @@ delib.module {
     { myconfig, ... }:
     let
       transparency = myconfig.osa.ui.transparency;
-      dmsTransparency = if transparency < 1.0 then lib.min transparency 0.8 else 1.0;
       frameRounding = myconfig.osa.ui.frameRounding;
     in
     {
       osa.de.dms.settings = {
-        # 0.95 opacity is barely visible; keep DMS surfaces visibly translucent
-        # without changing the shared opacity used by WezTerm and DriftWM.
-        popupTransparency = dmsTransparency;
-        frameOpacity = dmsTransparency;
         notificationHistoryEnabled = false;
         notificationOverlayEnabled = true;
         notificationFocusedMonitor = true;
@@ -147,12 +142,12 @@ delib.module {
             shadowIntensity = 0;
             spacing = 0;
             squareCorners = true;
-            transparency = dmsTransparency;
+            inherit transparency;
             visible = true;
             widgetOutlineColor = "primary";
             widgetOutlineEnabled = false;
             widgetPadding = 8;
-            widgetTransparency = dmsTransparency;
+            widgetTransparency = transparency;
           }
         ];
       };

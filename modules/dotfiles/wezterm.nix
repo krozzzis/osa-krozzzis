@@ -9,10 +9,12 @@ delib.module {
       local wezterm = require 'wezterm'
       local config = wezterm.config_builder()
 
+      wezterm.add_to_config_reload_watch_list(wezterm.home_dir .. '/.config/wezterm/colors/dank-theme.toml')
+
       config.font = wezterm.font '${myconfig.user.fonts.monospace.name}'
       config.hide_tab_bar_if_only_one_tab = true
 
-      -- background/opacity now handled in osa.terminal.wezterm (window_background_opacity 0.95, wayland blur, #0a0a0a)
+      -- background/opacity now handled in osa.terminal.wezterm
       -- keep only font/hide_tab_bar here, don't override colors/background
       return config
     '';
