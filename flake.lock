@@ -1653,11 +1653,11 @@
         "zen-browser": "zen-browser"
       },
       "locked": {
-        "lastModified": 1790780303,
-        "narHash": "sha256-z6qMqpJKpBz2SfDWpEgBzZwEQrgae1ALXu5NoMKt+sc=",
+        "lastModified": 1790780824,
+        "narHash": "sha256-zi1tWdE8MPyJVWM7WlB4SoKZObdY/U5RFCnKa+NyhP0=",
         "owner": "krozzzis",
         "repo": "osa",
-        "rev": "985c98228a823cd08865cd9f47a5b37af8a9474b",
+        "rev": "6560ba6b6a01465de30bc74fa2189e9d9441f070",
         "type": "github"
       },
       "original": {

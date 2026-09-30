@@ -147,12 +147,12 @@ delib.module {
             shadowIntensity = 0;
             spacing = 0;
             squareCorners = true;
-            inherit transparency;
+            transparency = dmsTransparency;
             visible = true;
             widgetOutlineColor = "primary";
             widgetOutlineEnabled = false;
             widgetPadding = 8;
-            widgetTransparency = transparency;
+            widgetTransparency = dmsTransparency;
           }
         ];
       };
