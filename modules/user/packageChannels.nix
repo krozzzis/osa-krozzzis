@@ -6,6 +6,9 @@ delib.module {
       system.nixpkgs = "stable";
       nixpkgs.default = "unstable";
 
+      # Set false to restore upstream WezTerm notification behavior.
+      terminal.wezterm.notifications.autoExpire = true;
+
       # Large applications with little benefit from following every rebuild
       # of unstable. Keep plugins and their host in the same package set.
       apps.rustdesk = {
