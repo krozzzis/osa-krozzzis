@@ -23,6 +23,7 @@ delib.module {
         lspPlugins.nixpkgs = "stable";
         patchbay.nixpkgs = "stable";
       };
+      ai.codex.nixpkgs = "unstable";
       editor.zed.nixpkgs = "unstable";
       editor.nixvim.nixpkgs = "unstable";
       browser.zenBrowser.nixpkgs = "unstable";

@@ -9,6 +9,8 @@
 delib.module {
   name = "user.shell";
 
+  myconfig.ifEnabled.user.shell.aliases.v = "nvim";
+
   home.ifEnabled = {
     home.sessionPath = [ "$HOME/.cargo/bin" ];
   };
