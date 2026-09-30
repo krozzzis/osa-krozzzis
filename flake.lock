@@ -137,11 +137,11 @@
     "dank-qml-common": {
       "flake": false,
       "locked": {
-        "lastModified": 1788376015,
-        "narHash": "sha256-/tT8rTznLADndTwLBzdgzzgfJH1ZhYQibYo5v/F8U+U=",
+        "lastModified": 1790691843,
+        "narHash": "sha256-ZoqLNYx8vgjFV18mI3l8vvkG9SufqZD2qr7q/j+aCns=",
         "owner": "AvengeMedia",
         "repo": "dank-qml-common",
-        "rev": "26396ce432d6c71c3f5367438f96f4a8d667e160",
+        "rev": "7092ee89ba7bab4afe74a215f31b999ae1546b9f",
         "type": "github"
       },
       "original": {
@@ -163,6 +163,81 @@
       "original": {
         "owner": "AvengeMedia",
         "repo": "dank-qml-common",
+        "type": "github"
+      }
+    },
+    "dank-qml-common_3": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1790691843,
+        "narHash": "sha256-ZoqLNYx8vgjFV18mI3l8vvkG9SufqZD2qr7q/j+aCns=",
+        "owner": "AvengeMedia",
+        "repo": "dank-qml-common",
+        "rev": "7092ee89ba7bab4afe74a215f31b999ae1546b9f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AvengeMedia",
+        "repo": "dank-qml-common",
+        "type": "github"
+      }
+    },
+    "dank-qml-common_4": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1788376015,
+        "narHash": "sha256-/tT8rTznLADndTwLBzdgzzgfJH1ZhYQibYo5v/F8U+U=",
+        "owner": "AvengeMedia",
+        "repo": "dank-qml-common",
+        "rev": "26396ce432d6c71c3f5367438f96f4a8d667e160",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AvengeMedia",
+        "repo": "dank-qml-common",
+        "type": "github"
+      }
+    },
+    "dankcalendar": {
+      "inputs": {
+        "dank-qml-common": "dank-qml-common",
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1790692174,
+        "narHash": "sha256-XUCLGNxV3zA5OY4YF9s4tQzCfiIqtftdyCWLKzrkmgE=",
+        "owner": "AvengeMedia",
+        "repo": "dankcalendar",
+        "rev": "506bef4c73c156c3157cd35e9c6e36868e4f1437",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AvengeMedia",
+        "repo": "dankcalendar",
+        "type": "github"
+      }
+    },
+    "dankcalendar_2": {
+      "inputs": {
+        "dank-qml-common": "dank-qml-common_3",
+        "nixpkgs": [
+          "osa",
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1790692174,
+        "narHash": "sha256-XUCLGNxV3zA5OY4YF9s4tQzCfiIqtftdyCWLKzrkmgE=",
+        "owner": "AvengeMedia",
+        "repo": "dankcalendar",
+        "rev": "506bef4c73c156c3157cd35e9c6e36868e4f1437",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AvengeMedia",
+        "repo": "dankcalendar",
         "type": "github"
       }
     },
@@ -242,7 +317,7 @@
     },
     "dms": {
       "inputs": {
-        "dank-qml-common": "dank-qml-common",
+        "dank-qml-common": "dank-qml-common_2",
         "flake-compat": "flake-compat_2",
         "nixpkgs": [
           "nixpkgs-unstable"
@@ -306,7 +381,7 @@
     },
     "dms_2": {
       "inputs": {
-        "dank-qml-common": "dank-qml-common_2",
+        "dank-qml-common": "dank-qml-common_4",
         "flake-compat": "flake-compat_4",
         "nixpkgs": [
           "osa",
@@ -1552,6 +1627,7 @@
       "inputs": {
         "caelestia-shell": "caelestia-shell_2",
         "conflux-icon-theme": "conflux-icon-theme_2",
+        "dankcalendar": "dankcalendar_2",
         "denix": "denix_2",
         "dms": "dms_2",
         "dms-plugin-registry": "dms-plugin-registry_2",
@@ -1577,11 +1653,11 @@
         "zen-browser": "zen-browser"
       },
       "locked": {
-        "lastModified": 1790755282,
-        "narHash": "sha256-duXv1MMuTfAwmNNxtPdlWA7aucrC1IKbb5tyKHnXM0w=",
+        "lastModified": 1790764614,
+        "narHash": "sha256-E4G3grkwpWNRc8VtkM0W95UsWD4w+5NVX65UBg5w42Q=",
         "owner": "krozzzis",
         "repo": "osa",
-        "rev": "dee3d90ad68e0ca6f1a48e53029dda76322d5986",
+        "rev": "b0d6a74699c63c776443ac8161edf5267c75f596",
         "type": "github"
       },
       "original": {
@@ -1759,6 +1835,7 @@
       "inputs": {
         "caelestia-shell": "caelestia-shell",
         "conflux-icon-theme": "conflux-icon-theme",
+        "dankcalendar": "dankcalendar",
         "denix": "denix",
         "disko": "disko",
         "dms": "dms",
