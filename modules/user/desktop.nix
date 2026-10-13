@@ -34,6 +34,7 @@ delib.module {
       system.ntfs.enable = false;
       media = {
         cloudmus.enable = true;
+        cloudmus.notifications = "SILENT";
         musescore.enable = true;
         lspPlugins.enable = true;
         kdenlive.enable = true;
