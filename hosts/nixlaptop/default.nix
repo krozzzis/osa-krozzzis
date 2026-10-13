@@ -1,6 +1,5 @@
 {
   delib,
-  lib,
   pkgs,
   inputs,
   ...
@@ -13,14 +12,13 @@ delib.host {
   myconfig = { myconfig, ... }: {
     # The denix rice now only chooses the primary OSA rice/session.
     user.desktop.enable = true;
+    user.zenBrowser.enable = true;
 
     osa.editor.nixvim.enable = true;
-    osa.browser.zenBrowser.enable = true;
     osa.browser.videoFullscreenZoom.enable = true;
     osa.browser.firefox.enable = true;
     osa.browser.chromium.enable = true;
     osa.browser.librewolf.enable = false;
-    user.browser.default = lib.mkForce myconfig.osa.browser.zenBrowser;
     osa.media.reaper.enable = false;
     osa.media.patchbay.enable = false;
     osa.terminal.wezterm.enable = true;
@@ -37,6 +35,7 @@ delib.host {
     osa.apps.cosmic.enable = false;
     osa.apps.arduinoIde.enable = false;
     osa.apps.obsidian.enable = true;
+    osa.apps.steam.enable = true;
     osa.shell.fzf.enable = true;
     osa.shell.fastfetch.enable = true;
 

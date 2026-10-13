@@ -10,7 +10,7 @@ delib.module {
   myconfig.ifEnabled = { myconfig, ... }: {
     user = {
       gui.enable = true;
-      ui.transparency = 0.93;
+      ui.transparency = 0.95;
       ui.workspaces = map toString (lib.range 0 9);
       shell = {
         enable = true;
