@@ -15,6 +15,15 @@ delib.host {
     user.zenBrowser.enable = true;
 
     osa.editor.nixvim.enable = true;
+
+    osa.dev.lsp.basedpyright.enable = true;
+    osa.dev.lsp.jsonnet-ls.enable = true;
+    osa.dev.lsp.lua-ls.enable = true;
+    osa.dev.lsp.nixd.enable = true;
+    osa.dev.lsp.ruff.enable = true;
+    osa.dev.lsp.rust-analyzer.enable = true;
+    osa.dev.lsp.taplo.enable = true;
+
     osa.browser.videoFullscreenZoom.enable = true;
     osa.browser.firefox.enable = true;
     osa.browser.chromium.enable = true;
@@ -24,6 +33,7 @@ delib.host {
     osa.terminal.wezterm.enable = true;
     osa.apps.wireshark.enable = true;
     osa.apps.loupe.enable = true;
+    osa.media.audacity.enable = false;
     osa.apps.wine = {
       enable = true;
       profiles.wine-ru = {
@@ -84,7 +94,7 @@ delib.host {
 
     services.blueman.enable = true;
 
-    environment.systemPackages = [ pkgs.python3 ];
+    environment.systemPackages = [ pkgs.python3 pkgs.distrobox ];
 
     boot.tmp.useTmpfs = true;
 
