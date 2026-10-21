@@ -94,6 +94,11 @@ delib.host {
 
     services.blueman.enable = true;
 
+    services.udev.extraRules = ''
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="3748", MODE="0666", TAG+="uaccess"
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="0483", ATTRS{idProduct}=="374b", MODE="0666", TAG+="uaccess"
+    '';
+
     environment.systemPackages = [ pkgs.python3 pkgs.distrobox ];
 
     boot.tmp.useTmpfs = true;
