@@ -62,6 +62,7 @@ delib.host {
 
     osa.ai.claude-code.enable = false;
     osa.ai.opencode.enable = false;
+    osa.ai.freebuff.enable = false;
 
     # optimize.nix assumes systemd-boot + btrfs (nixlaptop's setup); eeepc
     # boots via grub + ext4 (see boot.nix/disko.nix).
