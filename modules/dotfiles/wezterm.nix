@@ -9,13 +9,8 @@ delib.module {
       local wezterm = require 'wezterm'
       local config = wezterm.config_builder()
 
-      local theme_path = wezterm.home_dir .. '/.config/wezterm/colors/dank-theme.toml'
-      wezterm.add_to_config_reload_watch_list(theme_path)
-
-      local loaded, theme = pcall(wezterm.color.load_scheme, theme_path)
-      if loaded and theme and theme.background then
-        config.colors = { background = theme.background }
-      end
+      config.color_scheme = wezterm.gui.get_appearance():find 'Dark'
+        and 'Kanagawa (Gogh)' or 'Kanagawa Lotus (Gogh)'
 
       config.font = wezterm.font '${myconfig.user.fonts.monospace.name}'
       config.hide_tab_bar_if_only_one_tab = true
