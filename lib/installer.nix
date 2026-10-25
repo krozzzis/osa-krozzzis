@@ -67,6 +67,15 @@ lib.nixosSystem {
         networking.hostName = "${targetName}-installer";
         system.stateVersion = target.config.system.stateVersion;
 
+        # Keep the target's signed caches available in the live environment
+        # as well, including Nyx when the target opts into CachyOS.
+        nix.settings = lib.genAttrs [
+          "substituters"
+          "extra-substituters"
+          "trusted-public-keys"
+          "extra-trusted-public-keys"
+        ] (name: target.config.nix.settings.${name} or [ ]);
+
         # Cheap safety net for weak/low-RAM install targets (e.g. eeepc's
         # 1GB Atom netbook): the live squashfs+tmpfs environment has no
         # disk swap available until diskoScript formats the target disk,

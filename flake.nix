@@ -45,6 +45,7 @@
         quickshell.follows = "quickshell";
       };
     };
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     conflux-icon-theme = {
       url = "github:MoshiurRahmanAdib/Conflux-Icon-Theme";
       flake = false;
