@@ -1793,11 +1793,11 @@
         "zen-browser": "zen-browser"
       },
       "locked": {
-        "lastModified": 1792954249,
-        "narHash": "sha256-7nSu3EtSy11VjXeJnDKHnM1+d2AVVAc4ZbAdj/Ghu4U=",
+        "lastModified": 1792955331,
+        "narHash": "sha256-BkN8xed957We4oRYx3NDgDBYhHsGIBdd8SF6vH+0Eqs=",
         "owner": "krozzzis",
         "repo": "osa",
-        "rev": "9bebc764c63dce61fb8bf3f38bab5943eee56c4d",
+        "rev": "8842f10c16899316e0dd65b20b076a1b5c81498a",
         "type": "github"
       },
       "original": {
