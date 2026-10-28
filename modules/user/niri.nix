@@ -36,6 +36,7 @@ delib.module {
               in
               assert lib.hasInfix "cursor {" finalConfig;
               (lib.replaceStrings [ "cursor {" ] [ "cursor {\n${shake}" ] finalConfig)
+              + "\n"
               + ghosttyBlur;
           };
       }
