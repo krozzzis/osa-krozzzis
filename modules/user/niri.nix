@@ -25,9 +25,18 @@ delib.module {
                     sensitivity 2.5
                   }
                 '';
+                ghosttyBlur = ''
+                  window-rule {
+                    match app-id="^com\\.mitchellh\\.ghostty$"
+                    background-effect {
+                      blur true
+                    }
+                  }
+                '';
               in
               assert lib.hasInfix "cursor {" finalConfig;
-              lib.replaceStrings [ "cursor {" ] [ "cursor {\n${shake}" ] finalConfig;
+              (lib.replaceStrings [ "cursor {" ] [ "cursor {\n${shake}" ] finalConfig)
+              + ghosttyBlur;
           };
       }
     );
