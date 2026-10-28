@@ -14,7 +14,7 @@ delib.host {
 
     user.shell.default = myconfig.osa.shell.fish;
     user.editor.default = myconfig.osa.editor.vim;
-    user.terminal.default = myconfig.osa.terminal.wezterm;
+    user.terminal.default = myconfig.osa.terminal.ghostty;
     user.browser.default = myconfig.osa.browser.zenBrowser;
     user.fileManager.default = myconfig.osa.fileManager.nautilus;
     user.imageViewer.default = myconfig.osa.apps.loupe;
