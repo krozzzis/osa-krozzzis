@@ -1,4 +1,4 @@
-{ delib, lib, ... }:
+{ delib, lib, pkgs, ... }:
 delib.module {
   name = "osa.editor.nixvim";
 
@@ -11,22 +11,41 @@ delib.module {
       # Nixvim emits colorscheme setup into init.lua, so load start packages
       # first. The selected colorscheme is applied in extraConfigLuaPost,
       # after both plugin setups have run.
+      extraPackages = [ pkgs.glib.bin pkgs.coreutils ];
+
       extraConfigLuaPre = lib.mkBefore ''
         vim.cmd("packloadall")
 
-        -- Kanagawa Dragon for dark, Rosé Pine Dawn for light.
+        -- Rosé Pine for dark, One Light for light.
         local function desktop_background()
-          local handle = io.popen("gsettings get org.gnome.desktop.interface color-scheme 2>/dev/null")
+          local handle = io.popen(
+            "timeout 1s gdbus call --session " ..
+            "--dest org.freedesktop.portal.Desktop " ..
+            "--object-path /org/freedesktop/portal/desktop " ..
+            "--method org.freedesktop.portal.Settings.Read " ..
+            "org.freedesktop.appearance color-scheme 2>/dev/null"
+          )
           if not handle then return "dark" end
-          local scheme = handle:read("*a")
+          local response = handle:read("*a")
           handle:close()
-          return scheme:match("prefer%-light") and "light" or "dark"
+          local scheme = response:match("uint32%s+(%d+)")
+          if scheme == "2" then return "light" end
+          if scheme == "1" then return "dark" end
+          return vim.o.background
         end
 
         local function apply_theme()
           local background = desktop_background()
           vim.o.background = background
-          vim.cmd.colorscheme(background == "light" and "rose-pine" or "kanagawa")
+          if background == "light" then
+            require("onedark").setup({ style = "light", transparent = true })
+          else
+            require("rose-pine").setup({
+              variant = "main",
+              styles = { transparency = true },
+            })
+          end
+          vim.cmd.colorscheme(background == "light" and "onedark" or "rose-pine")
         end
       '';
 
@@ -43,10 +62,10 @@ delib.module {
         })
       '';
 
-      colorschemes.kanagawa = {
+      colorschemes.onedark = {
         enable = true;
         settings = {
-          background.dark = "dragon";
+          style = "light";
           transparent = true;
         };
       };
@@ -54,7 +73,7 @@ delib.module {
       colorschemes.rose-pine = {
         enable = true;
         settings = {
-          variant = "dawn";
+          variant = "main";
           styles.transparency = true;
         };
       };

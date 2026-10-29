@@ -47,7 +47,6 @@ delib.host {
     osa.apps.obsidian.enable = true;
     osa.apps.steam.enable = true;
     osa.shell.fzf.enable = true;
-    osa.shell.fastfetch.enable = true;
 
     osa.system.libvirtd.enable = true;
     osa.system.audio.enable = true;
@@ -79,7 +78,6 @@ delib.host {
     time.timeZone = "Asia/Yekaterinburg";
     i18n.extraLocales = [ "ru_RU.UTF-8/UTF-8" ];
 
-    swapDevices = [ { device = "/swap/swapfile"; } ];
     boot.kernelParams = [
       # Lucienne's s2idle resume hangs (frozen screen right after lid-open).
       # PSR (Panel Self Refresh) is the usual culprit on AMD iGPU laptops;

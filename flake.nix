@@ -91,6 +91,10 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
+    kkfetch = {
+      url = "github:kk376/kkfetch";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     koala-clash = {
       url = "github:endotrizine/koala-clash-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -101,6 +105,10 @@
     };
     niri-pkgs = {
       url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nixos-hardware = {

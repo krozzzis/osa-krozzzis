@@ -11,7 +11,8 @@ delib.module {
         shiftwidth = 4;
         expandtab = true;
         smartindent = true;
-        wrap = false;
+        wrap = true;
+        langmap = "йцукенгшщзхъфывапролджэячсмитьбю;qwertyuiop[]asdfghjkl'zxcvbnm\\,.,ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;QWERTYUIOP{}ASDFGHJKL\"ZXCVBNM<>";
         termguicolors = true;
         mouse = "a";
         clipboard = "unnamedplus";
