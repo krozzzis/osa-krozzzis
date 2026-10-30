@@ -12,7 +12,7 @@ delib.module {
         expandtab = true;
         smartindent = true;
         wrap = true;
-        langmap = "йцукенгшщзхъфывапролджэячсмитьбю;qwertyuiop[]asdfghjkl'zxcvbnm\\,.,ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;QWERTYUIOP{}ASDFGHJKL\"ZXCVBNM<>";
+        langmap = "йцукенгшщзхъфывапролджэячсмитьбю;qwertyuiop[]asdfghjkl'zxcvbnm\\,./,ЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЯЧСМИТЬБЮ;QWERTYUIOP{}ASDFGHJKL\"ZXCVBNM<>?";
         termguicolors = true;
         mouse = "a";
         clipboard = "unnamedplus";

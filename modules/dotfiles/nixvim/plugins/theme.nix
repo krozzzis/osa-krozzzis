@@ -38,14 +38,19 @@ delib.module {
           local background = desktop_background()
           vim.o.background = background
           if background == "light" then
-            require("onedark").setup({ style = "light", transparent = true })
+            vim.cmd.colorscheme("base16-one-light")
           else
-            require("rose-pine").setup({
-              variant = "main",
-              styles = { transparency = true },
+            require("kanagawa").setup({
+              theme = "wave",
+              transparent = true,
             })
+            vim.cmd.colorscheme("kanagawa")
           end
-          vim.cmd.colorscheme(background == "light" and "onedark" or "rose-pine")
+          -- Keep the terminal's selected background visible through every
+          -- window, including the end-of-buffer area and floating windows.
+          for _, group in ipairs({ "Normal", "NormalNC", "EndOfBuffer", "SignColumn", "FoldColumn", "NormalFloat", "FloatBorder" }) do
+            vim.api.nvim_set_hl(0, group, { bg = "none" })
+          end
         end
       '';
 
@@ -62,21 +67,7 @@ delib.module {
         })
       '';
 
-      colorschemes.onedark = {
-        enable = true;
-        settings = {
-          style = "light";
-          transparent = true;
-        };
-      };
-
-      colorschemes.rose-pine = {
-        enable = true;
-        settings = {
-          variant = "main";
-          styles.transparency = true;
-        };
-      };
+      extraPlugins = [ pkgs.vimPlugins.base16-vim pkgs.vimPlugins.kanagawa-nvim ];
     };
   };
 }

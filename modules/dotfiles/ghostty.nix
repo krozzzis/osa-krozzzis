@@ -7,6 +7,24 @@
 # at all (only Kanagawa Wave/Dragon/Lotus), so the dark half silently fell back
 # to Ghostty's default colors. Define WezTerm's exact schemes instead.
 { delib, pkgs, ... }:
+let
+  cursorWarpShader = pkgs.runCommand "ghostty-cursor-warp-tuned.glsl" { } ''
+    sed \
+      -e 's/const float DURATION = 0.2;/const float DURATION = 0.12;/' \
+      -e 's/const float TRAIL_SIZE = 0.8;/const float TRAIL_SIZE = 0.35;/' \
+      -e 's/const float THRESHOLD_MIN_DISTANCE = 1.5;/const float THRESHOLD_MIN_DISTANCE = 2.0;/' \
+      -e 's/const float TRAIL_THICKNESS = 1.0;/const float TRAIL_THICKNESS = 0.55;/' \
+      -e 's/const float TRAIL_THICKNESS_X = 0.9;/const float TRAIL_THICKNESS_X = 0.65;/' \
+      -e 's/const float FADE_ENABLED = 0.0;/const float FADE_ENABLED = 1.0;/' \
+      -e 's/const float FADE_EXPONENT = 5.0;/const float FADE_EXPONENT = 2.0;/' \
+      -e 's/return sqrt(1.0 - pow(x - 1.0, 2.0));/return 1.0 - pow(1.0 - x, 3.0);/' \
+      ${pkgs.fetchurl {
+        name = "ghostty-cursor-warp-upstream.glsl";
+        url = "https://raw.githubusercontent.com/sahaj-b/cursor-shaders/9ad9158a93c0de0c045e1c6b27df37da698bc8af/ghostty/cursor_warp.glsl";
+        hash = "sha256-WJ9x9TfO6JCgfkCPE9Bi/32T3m2fdCyE5L3mEExdUfs=";
+      }} > "$out"
+  '';
+in
 delib.module {
   name = "osa.terminal.ghostty";
 
@@ -75,21 +93,14 @@ delib.module {
       settings = {
         theme = "dark:kanagawa-gogh,light:one-light";
         "app-notifications" = "no-config-reload";
-        custom-shader = "${pkgs.fetchurl {
-          name = "ghostty-cursor-tail.glsl";
-          url = "https://raw.githubusercontent.com/sahaj-b/cursor-shaders/9ad9158a93c0de0c045e1c6b27df37da698bc8af/ghostty/cursor_tail.glsl";
-          hash = "sha256-CEEjiRG9USeW8i9c+FbFgt8Rzcrc11KFNHOfvH0soxI=";
-        }}";
+        custom-shader = "${cursorWarpShader}";
         working-directory = "home";
         window-inherit-working-directory = false;
         tab-inherit-working-directory = false;
         split-inherit-working-directory = false;
 
-        # Keep the caret the thin bar Fish asks for at the prompt, but make it
-        # wide enough to find at a glance. Default bar width is 1px and the
-        # modifier is a delta in pixels.
+        # Keep the native one-pixel bar; the warp shader draws a thinner trail.
         cursor-style = "bar";
-        adjust-cursor-thickness = 1;
       };
     };
   };
