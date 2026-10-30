@@ -67,6 +67,8 @@ delib.host {
   nixos.system.stateVersion = "26.05";
 
   nixos = {
+    nix.package = pkgs.lixPackageSets.stable.lix;
+
     # Fix zen-browser ffmpeg_7 -> ffmpeg_8 after nixpkgs c043 removed ffmpeg_7
     nixpkgs.overlays = [
       (final: prev: {
