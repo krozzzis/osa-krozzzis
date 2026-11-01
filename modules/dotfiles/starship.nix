@@ -196,12 +196,13 @@ delib.module {
 
           git_branch = {
             disabled = false;
-            format = " (\\($branch\\))$style";
+            format = " [$symbol $branch]($style)";
           };
 
           direnv = {
             disabled = false;
-            format = " (\\($symbol direnv\\))$style";
+            format = " ($symbol direnv)$style";
+            #format = " [$symbol$loaded/$allowed]($style)";
           };
 
           package.disabled = false;
