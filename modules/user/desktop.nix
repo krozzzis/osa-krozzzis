@@ -33,7 +33,7 @@ delib.module {
       fileManager.flux.enable = false;
       system.ntfs.enable = false;
       media = {
-        cloudmus.enable = true;
+        cloudmus.enable = false;
         cloudmus.notifications = "SILENT";
         musescore.enable = true;
         lspPlugins.enable = true;

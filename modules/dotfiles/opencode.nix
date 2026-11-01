@@ -5,15 +5,16 @@ delib.module {
 
   home.ifEnabled = {
     programs.opencode.themes.transparent.theme = lib.mkForce {
-      primary = { dark = "#ebbcba"; light = "#4078f2"; };
-      secondary = { dark = "#f6c177"; light = "#0184bc"; };
-      accent = { dark = "#c4a7e7"; light = "#a626a4"; };
-      error = { dark = "#eb6f92"; light = "#e45649"; };
-      warning = { dark = "#f6c177"; light = "#c18401"; };
-      success = { dark = "#31748f"; light = "#50a14f"; };
-      info = { dark = "#9ccfd8"; light = "#0184bc"; };
-      text = { dark = "#e0def4"; light = "#383a42"; };
-      textMuted = { dark = "#908caa"; light = "#a0a1a7"; };
+      # Dark theme (Kanagawa Gogh) – matching ghostty
+      primary = { dark = "#7e9cd8"; light = "#4078f2"; };
+      secondary = { dark = "#1f1f28"; light = "#fafafa"; };
+      accent = { dark = "#c0a36e"; light = "#c18401"; };
+      error = { dark = "#c34043"; light = "#ca1243"; };
+      warning = { dark = "#c0a36e"; light = "#c18401"; };
+      success = { dark = "#76946a"; light = "#50a14f"; };
+      info = { dark = "#7e9cd8"; light = "#0184bc"; };
+      text = { dark = "#dcd7ba"; light = "#383a42"; };
+      textMuted = { dark = "#727169"; light = "#a0a1a7"; };
 
       # Keep both modes transparent so the terminal background shows through.
       background = "none";
@@ -23,40 +24,40 @@ delib.module {
       borderActive = "none";
       borderSubtle = "none";
 
-      diffAdded = { dark = "#31748f"; light = "#50a14f"; };
-      diffRemoved = { dark = "#eb6f92"; light = "#e45649"; };
-      diffContext = { dark = "#908caa"; light = "#a0a1a7"; };
-      diffHunkHeader = { dark = "#908caa"; light = "#a0a1a7"; };
+      diffAdded = { dark = "#76946a"; light = "#50a14f"; };
+      diffRemoved = { dark = "#c34043"; light = "#ca1243"; };
+      diffContext = { dark = "#727169"; light = "#a0a1a7"; };
+      diffHunkHeader = { dark = "#727169"; light = "#a0a1a7"; };
       diffAddedBg = "none";
       diffRemovedBg = "none";
       diffContextBg = "none";
-      diffHighlightAdded = { dark = "#31748f"; light = "#50a14f"; };
-      diffHighlightRemoved = { dark = "#eb6f92"; light = "#e45649"; };
-      diffLineNumber = { dark = "#908caa"; light = "#a0a1a7"; };
+      diffHighlightAdded = { dark = "#76946a"; light = "#50a14f"; };
+      diffHighlightRemoved = { dark = "#c34043"; light = "#ca1243"; };
+      diffLineNumber = { dark = "#727169"; light = "#a0a1a7"; };
       diffAddedLineNumberBg = "none";
       diffRemovedLineNumberBg = "none";
 
-      markdownText = { dark = "#e0def4"; light = "#383a42"; };
+      markdownText = { dark = "#dcd7ba"; light = "#383a42"; };
       markdownHeading = { dark = "#ebbcba"; light = "#4078f2"; };
       markdownLink = { dark = "#c4a7e7"; light = "#4078f2"; };
       markdownLinkText = { dark = "#9ccfd8"; light = "#0184bc"; };
-      markdownCode = { dark = "#31748f"; light = "#50a14f"; };
-      markdownBlockQuote = { dark = "#908caa"; light = "#a0a1a7"; };
-      markdownEmph = { dark = "#eb6f92"; light = "#e45649"; };
-      markdownStrong = { dark = "#f6c177"; light = "#c18401"; };
-      markdownHorizontalRule = { dark = "#908caa"; light = "#a0a1a7"; };
+      markdownCode = { dark = "#76946a"; light = "#50a14f"; };
+      markdownBlockQuote = { dark = "#727169"; light = "#a0a1a7"; };
+      markdownEmph = { dark = "#c34043"; light = "#ca1243"; };
+      markdownStrong = { dark = "#c0a36e"; light = "#c18401"; };
+      markdownHorizontalRule = { dark = "#727169"; light = "#a0a1a7"; };
       markdownListItem = { dark = "#ebbcba"; light = "#4078f2"; };
       markdownListEnumeration = { dark = "#c4a7e7"; light = "#a626a4"; };
       markdownImage = { dark = "#9ccfd8"; light = "#0184bc"; };
       markdownImageText = { dark = "#9ccfd8"; light = "#0184bc"; };
-      markdownCodeBlock = { dark = "#e0def4"; light = "#383a42"; };
+      markdownCodeBlock = { dark = "#dcd7ba"; light = "#383a42"; };
 
-      syntaxComment = { dark = "#908caa"; light = "#a0a1a7"; };
+      syntaxComment = { dark = "#727169"; light = "#a0a1a7"; };
       syntaxKeyword = { dark = "#c4a7e7"; light = "#a626a4"; };
       syntaxFunction = { dark = "#ebbcba"; light = "#4078f2"; };
-      syntaxVariable = { dark = "#e0def4"; light = "#383a42"; };
-      syntaxString = { dark = "#31748f"; light = "#50a14f"; };
-      syntaxNumber = { dark = "#f6c177"; light = "#986801"; };
+      syntaxVariable = { dark = "#dcd7ba"; light = "#383a42"; };
+      syntaxString = { dark = "#76946a"; light = "#50a14f"; };
+      syntaxNumber = { dark = "#c0a36e"; light = "#986801"; };
       syntaxType = { dark = "#9ccfd8"; light = "#0184bc"; };
       syntaxOperator = { dark = "#ebbcba"; light = "#4078f2"; };
       syntaxPunctuation = { dark = "#c4a7e7"; light = "#383a42"; };

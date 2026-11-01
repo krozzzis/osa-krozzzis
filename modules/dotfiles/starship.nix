@@ -29,7 +29,7 @@ delib.module {
       crystal.symbol = "";
       dart.symbol = "";
       deno.symbol = "";
-      direnv.symbol = "";
+      direnv.symbol = "";
       directory.read_only = " 󰌾";
       docker_context.symbol = "";
       dotnet.symbol = "";
@@ -40,7 +40,7 @@ delib.module {
       fortran.symbol = "";
       fossil_branch.symbol = "";
       gcloud.symbol = "󱇶";
-      git_branch.symbol = "";
+      git_branch.symbol = "";
       git_commit.tag_symbol = "";
       gleam.symbol = "";
       golang.symbol = "";
@@ -163,8 +163,10 @@ delib.module {
     programs.starship = {
       settings = recursiveUpdate
         {
-          format = "[$username@$hostname](bold green) [$directory](bold blue)$git_branch$character";
-          add_newline = false;
+          format = ''
+            [$username@$hostname](bold green)$git_branch$direnv
+            [$directory](bold blue)$character'';
+          add_newline = true;
 
           character = {
             format = "$symbol";
@@ -194,7 +196,12 @@ delib.module {
 
           git_branch = {
             disabled = false;
-            format = "[\\($branch\\)]($style)";
+            format = " (\\($branch\\))$style";
+          };
+
+          direnv = {
+            disabled = false;
+            format = " (\\($symbol direnv\\))$style";
           };
 
           package.disabled = false;

@@ -11,7 +11,7 @@ delib.module {
       userSettings.theme = {
         mode = "system";
         light = "One Light";
-        dark = "Rosé Pine";
+        dark = "Kanagawa Wave";
       };
     };
   };
