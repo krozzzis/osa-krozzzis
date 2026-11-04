@@ -6,6 +6,11 @@ delib.module {
       system.nixpkgs = "stable";
       nixpkgs.default = "unstable";
 
+      # The locked OSA revision applies a patch incompatible with Ghostty 1.4.
+      # Use the selected channel package until the OSA lock is updated.
+      terminal.ghostty.pkg =
+        myconfig.osa.nixpkgs.packages.${myconfig.osa.terminal.ghostty.nixpkgs}.ghostty;
+
       # Set false to restore upstream WezTerm notification behavior.
       terminal.wezterm.notifications.autoExpire = false;
 

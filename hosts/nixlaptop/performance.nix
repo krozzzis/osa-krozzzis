@@ -49,7 +49,7 @@ delib.host {
     systemd.services.laptop-power-profile = {
       description = "Select laptop power profile for the current power source";
       wantedBy = [
-        "multi-user.target"
+        "graphical.target"
         "post-resume.target"
       ];
       after = [ "power-profiles-daemon.service" ];

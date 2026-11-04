@@ -61,9 +61,6 @@ delib.host {
   };
 
   home.home.stateVersion = "26.05";
-  home.home.packages = [
-    inputs."lyrics-visualizer".packages.${pkgs.stdenv.hostPlatform.system}.default
-  ];
   nixos.system.stateVersion = "26.05";
 
   nixos = {

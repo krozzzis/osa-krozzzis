@@ -50,9 +50,15 @@ outputs = inputs:
 ```
 
 Set `includePersonal = false` to omit the personal modules and rices, or
-`includeHosts = false` to omit the bundled hosts. New flake inputs belong in an
-`inputs.nix` beside their consumer. Regenerate `flake.nix` after changing an
-input declaration.
+`includeHosts = false` to omit the bundled hosts. New flake inputs belong in the root `flake.nix`; update `flake.lock` after
+changing input URLs.
+
+The bundled configuration declares `installerHosts` in `flake.nix` so Nix can
+list installer outputs without evaluating every target. Add each installable
+host and its architecture there; rice variants of those hosts are included.
+When calling `lib.mkConfigurations`, omit `installerHosts` to discover
+installable targets automatically, or supply a host-to-system attribute set
+to opt into lazy discovery. An installer still validates its target on use.
 
 ## Hosts
 
@@ -84,8 +90,8 @@ osa.media.audacity.nixpkgs = "unstable";
 
 `"system"` uses the host package set, including its overlays. Additional inputs
 named `nixpkgs-<name>` become selectable channels. For example, declare
-`flake-file.inputs.nixpkgs-2605.url = "github:nixos/nixpkgs/nixos-26.05"`,
-regenerate the flake and select `"2605"`. Change the stable input's URL when
+`inputs.nixpkgs-2605.url = "github:nixos/nixpkgs/nixos-26.05"`,
+update the lock file and select `"2605"`. Change the stable input's URL when
 adopting a later stable release. Lock files pin exact revisions until updated.
 
 The Wine package's `wineWow64Packages.stable` attribute names its upstream
@@ -155,11 +161,10 @@ nix eval .#nixosConfigurations.nixlaptop-niri.config.system.build.toplevel.drvPa
 
 Publish the OSA commit first, update this repository's OSA input with
 `osa update-osa`, then check it without overrides and publish this repository.
-`flake.nix` is generated; change `flake-file.nix` or module-local `inputs.nix`,
-then run `nix run .#write-flake`. When a new OSA input changes available module
-inputs, regenerate again and update the lock file before validating.
+Edit input and output declarations in the root `flake.nix`, and update the
+lock file when changing inputs.
 
-Useful checks are `nix build --no-link .#checks.x86_64-linux.flake-file-in-sync`,
-toplevel evaluation for `nixlaptop-niri` and `pi-backup`, and `git diff --check`.
-These evaluate configuration and check generated files; they do not activate the
+Useful checks include toplevel evaluation for `nixlaptop-niri` and `pi-backup`,
+and `git diff --check`.
+These evaluate configuration; they do not activate the
 system or prove that every customized package builds or runs successfully.

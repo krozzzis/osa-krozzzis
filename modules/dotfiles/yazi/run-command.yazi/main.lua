@@ -1,9 +1,7 @@
 --- @since 26.9.1
 --
 -- Prompt for a shell command and run it over the current selection, with the
--- selected paths exposed as positional parameters: `$1`, `$2`, ..., `$@`.
--- `$0` is the placeholder program name (`yazi`), so `$1` is the hovered file
--- when nothing is selected.
+-- selected paths appended as arguments, or the hovered file if none are selected.
 
 local selected_or_hovered = ya.sync(function()
 	local tab = cx.active
@@ -33,7 +31,7 @@ return {
 		end
 
 		local value, event = ya.input {
-			title = "Run command ($1, $2, ... = files):",
+			title = "Run command on selection:",
 			pos = { "top-center", y = 3, w = 80 },
 		}
 		if event ~= 1 then
@@ -46,7 +44,7 @@ return {
 		end
 
 		ya.emit("shell", {
-			run = "sh -c " .. ya.quote(value, true) .. " yazi %s",
+			run = "sh -c " .. ya.quote(value .. ' "$@"', true) .. " yazi %s",
 			block = true,
 		})
 	end,

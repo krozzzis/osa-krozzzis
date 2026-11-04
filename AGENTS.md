@@ -17,8 +17,8 @@ osa build-iso pi-backup
 osa build-installer nixlaptop-niri
 ```
 
-Never edit generated `flake.nix`. After changing `flake-file.nix` or an
-`inputs.nix`, run `nix run .#write-flake` or use an `osa` command that does so.
+Declare flake inputs and outputs directly in the root `flake.nix`. Update
+`flake.lock` after changing input URLs.
 
 Keep modules declarative and concise. Prefer typed OSA handles directly, for
 example `user.editor.default = myconfig.osa.editor.nixvim`. Do not redeclare
@@ -52,9 +52,9 @@ set as their host application and do not put system-wide unstable overlays here.
 
 The composition function uses OSA's `lib/configurations.nix` so the system
 selector changes both modules and packages. `lib/installer.nix` follows each
-target's selected channel. Root `nixpkgs` follows `nixpkgs-stable`; application
-flake inputs normally follow `nixpkgs-unstable`. Keep generated `flake.nix` and
-`flake.lock` synchronized with input declarations.
+target's selected channel. Root `nixpkgs` follows `nixpkgs-stable`; external
+flake dependencies use their own pinned nixpkgs inputs for upstream cache
+identities. Keep `flake.lock` synchronized with input declarations.
 
 OSA is consumed from `github:krozzzis/osa`. For coordinated changes, publish OSA
 first, then update this repository's OSA lock entry and validate without local
@@ -78,8 +78,7 @@ PATH`; patched packages and configured wrappers may still build locally.
 Standalone Home Manager uses its host daemon's caches.
 
 After channel/cache changes, evaluate the affected desktop and `pi-backup`,
-check installer release/cache settings, run the generated-flake sync check and
-`git diff --check`. OSA's flake check covers both system channels. Its composition
+check installer release/cache settings and run `git diff --check`. OSA's flake check covers both system channels. Its composition
 builder selects Home Manager with the same release as system nixpkgs, using
 `home-manager-stable` for 26.05 and `home-manager` for unstable. Do not disable
 the release check; add a matching Home Manager input for new system releases.
