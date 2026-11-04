@@ -135,12 +135,6 @@
     };
 
   inputs = {
-    caelestia-shell = {
-      url = "github:caelestia-dots/shell";
-      inputs = {
-        quickshell.follows = "quickshell";
-      };
-    };
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     conflux-icon-theme = {
       url = "github:MoshiurRahmanAdib/Conflux-Icon-Theme";
@@ -163,9 +157,6 @@
     };
     dms-plugin-registry = {
       url = "github:AvengeMedia/dms-plugin-registry";
-    };
-    driftwm = {
-      url = "github:malbiruk/driftwm";
     };
     elephant.url = "github:abenz1267/elephant";
     firefox-addons = {
