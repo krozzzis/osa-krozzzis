@@ -20,7 +20,7 @@ delib.module {
 
         updaterHideWidget = true;
         workspaceOccupiedColorMode = "secondaryContainer";
-        workspaceUnfocusedColorMode = "schh";
+        workspaceUnfocusedColorMode = "sch";
 
         controlCenterWidgets = [
           {
