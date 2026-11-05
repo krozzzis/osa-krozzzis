@@ -26,13 +26,24 @@
           homeManagerUser ? "krozzzis",
           includePersonal ? true,
           includeHosts ? true,
-          hostsWithoutRices ? [ "pi-backup" ],
+          hostsWithoutRices ? [ ],
           # When supplied, host names and architectures are known without
           # evaluating every machine just to discover installer outputs.
           installerHosts ? null,
         }:
         let
-          moduleInputs = inputs // extraInputs;
+          baseInputs = inputs // extraInputs;
+          moduleInputs = baseInputs // {
+            dankcalendar = baseInputs.dankcalendar // {
+              lib = baseInputs.dankcalendar.lib // {
+                mkDcal = pkgs: (baseInputs.dankcalendar.lib.mkDcal pkgs).overrideAttrs (old: {
+                  goModules = old.goModules.overrideAttrs (_: {
+                    outputHash = "sha256-JT6mHK52mIJh4lzVWYVpqNY2S2oeinSWBIKaI3TiY34=";
+                  });
+                });
+              };
+            };
+          };
           localDirs =
             nixpkgsLib.optionals includeHosts [ (personalRoot + "/hosts") ]
             ++ nixpkgsLib.optionals includePersonal [
@@ -135,6 +146,10 @@
     };
 
   inputs = {
+    codex-build = {
+      url = "path:/nix/store/m17ywjbahyx89yzdyhxwmz3w1b6326k3-codex-0.165.0";
+      flake = false;
+    };
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     conflux-icon-theme = {
       url = "github:MoshiurRahmanAdib/Conflux-Icon-Theme";
@@ -143,6 +158,7 @@
     dankcalendar = {
       url = "github:AvengeMedia/dankcalendar";
     };
+    dank-greeter.url = "github:AvengeMedia/dank-greeter";
     denix = {
       url = "github:yunfachi/denix";
       inputs = {

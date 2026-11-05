@@ -1,4 +1,4 @@
-{ delib, ... }:
+{ delib, inputs, ... }:
 delib.module {
   name = "user.packageChannels";
   myconfig.always = { myconfig, ... }: {
@@ -32,6 +32,11 @@ delib.module {
         patchbay.nixpkgs = "stable";
       };
       ai.codex.nixpkgs = "unstable";
+      # Freeze the installed, patched build; updating nixpkgs must not rebuild it.
+      ai.codex.pkg = myconfig.osa.nixpkgs.packages.${myconfig.osa.ai.codex.nixpkgs}.runCommand
+        "codex-0.165.0-pinned"
+        { meta.mainProgram = "codex"; }
+        ''ln -s ${inputs.codex-build} "$out"'';
       editor.zed.nixpkgs = "unstable";
       editor.nixvim.nixpkgs = "unstable";
       browser.zenBrowser.nixpkgs = "unstable";

@@ -100,7 +100,7 @@ delib.host {
 
     boot.tmp.useTmpfs = true;
 
-    # Lets `nix build` cross-compile aarch64 hosts (e.g. pi-backup) via QEMU emulation.
+    # Lets `nix build` cross-compile aarch64 hosts via QEMU emulation.
     boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
     # Root is LUKS+btrfs (see disko.nix); ZFS is unused here but its default

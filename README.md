@@ -28,7 +28,6 @@ The `osa` CLI uses `~/osa-user` by default:
 osa update
 osa switch nixlaptop-niri
 osa update-switch nixlaptop-niri
-osa build-iso pi-backup
 osa build-installer nixlaptop-niri
 ```
 
@@ -64,7 +63,6 @@ to opt into lazy discovery. An installer still validates its target on use.
 
 - `nixlaptop`: primary desktop, using Niri and DMS.
 - `eeepc`: lightweight configuration for an older netbook.
-- `pi-backup`: headless backup appliance and image target.
 
 
 ## System and application versions
@@ -164,7 +162,7 @@ Publish the OSA commit first, update this repository's OSA input with
 Edit input and output declarations in the root `flake.nix`, and update the
 lock file when changing inputs.
 
-Useful checks include toplevel evaluation for `nixlaptop-niri` and `pi-backup`,
+Useful checks include toplevel evaluation for `nixlaptop-niri`,
 and `git diff --check`.
 These evaluate configuration; they do not activate the
 system or prove that every customized package builds or runs successfully.

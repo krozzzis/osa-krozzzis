@@ -13,7 +13,6 @@ repository and invokes `run0` only for privileged NixOS activation.
 osa update
 osa switch nixlaptop-niri
 osa update-switch nixlaptop-niri
-osa build-iso pi-backup
 osa build-installer nixlaptop-niri
 ```
 
@@ -77,7 +76,7 @@ activation. Confirm exact package availability with `nix path-info --store URL
 PATH`; patched packages and configured wrappers may still build locally.
 Standalone Home Manager uses its host daemon's caches.
 
-After channel/cache changes, evaluate the affected desktop and `pi-backup`,
+After channel/cache changes, evaluate the affected desktop,
 check installer release/cache settings and run `git diff --check`. OSA's flake check covers both system channels. Its composition
 builder selects Home Manager with the same release as system nixpkgs, using
 `home-manager-stable` for 26.05 and `home-manager` for unstable. Do not disable
