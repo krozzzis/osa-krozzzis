@@ -89,6 +89,8 @@ delib.module {
               {
                 enabled = true;
                 id = "workspaceSwitcher";
+                workspaceOccupiedColorMode = "secondaryContainer";
+                workspaceUnfocusedColorMode = "sch";
               }
             ];
             rightWidgets = [
