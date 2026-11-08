@@ -2241,11 +2241,11 @@
         "zen-browser": "zen-browser"
       },
       "locked": {
-        "lastModified": 1793873324,
-        "narHash": "sha256-SNgGRaOApYtfXUQDYp8yLJ0LWvN504AstvhGtCxw6xE=",
+        "lastModified": 1794148806,
+        "narHash": "sha256-a2ChmND+ok6k/IwCBSC4YLUJ661VTgrMQt2dzP9VmPE=",
         "owner": "krozzzis",
         "repo": "osa",
-        "rev": "6b5f353d5213801fd5701d3f6323a3c1d08f5f17",
+        "rev": "4aa301935725e0ab676c5f92e9e29d2d31aab479",
         "type": "github"
       },
       "original": {
