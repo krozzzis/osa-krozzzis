@@ -17,25 +17,7 @@ delib.module {
         vim.cmd("packloadall")
 
         -- Rosé Pine for dark, One Light for light.
-        local function desktop_background()
-          local handle = io.popen(
-            "timeout 1s gdbus call --session " ..
-            "--dest org.freedesktop.portal.Desktop " ..
-            "--object-path /org/freedesktop/portal/desktop " ..
-            "--method org.freedesktop.portal.Settings.Read " ..
-            "org.freedesktop.appearance color-scheme 2>/dev/null"
-          )
-          if not handle then return "dark" end
-          local response = handle:read("*a")
-          handle:close()
-          local scheme = response:match("uint32%s+(%d+)")
-          if scheme == "2" then return "light" end
-          if scheme == "1" then return "dark" end
-          return vim.o.background
-        end
-
-        local function apply_theme()
-          local background = desktop_background()
+        local function apply_theme(background)
           vim.o.background = background
           if background == "light" then
             vim.cmd.colorscheme("base16-one-light")
@@ -52,18 +34,31 @@ delib.module {
             vim.api.nvim_set_hl(0, group, { bg = "none" })
           end
         end
+
+        local function update_theme()
+          vim.system({ "gdbus", "call", "--session",
+            "--dest", "org.freedesktop.portal.Desktop",
+            "--object-path", "/org/freedesktop/portal/desktop",
+            "--method", "org.freedesktop.portal.Settings.Read",
+            "org.freedesktop.appearance", "color-scheme" }, { text = true, timeout = 1000 }, function(result)
+              local scheme = (result.stdout or ""):match("uint32%s+(%d+)")
+              local background = scheme == "2" and "light" or scheme == "1" and "dark" or nil
+              if background then
+                vim.schedule(function()
+                  if background ~= vim.o.background then apply_theme(background) end
+                end)
+              end
+            end)
+        end
       '';
 
       extraConfigLuaPost = ''
-        apply_theme()
+        apply_theme(vim.o.background)
+        update_theme()
 
         -- Re-read the desktop preference whenever Neovim regains focus.
         vim.api.nvim_create_autocmd("FocusGained", {
-          callback = function()
-            if desktop_background() ~= vim.o.background then
-              apply_theme()
-            end
-          end,
+          callback = update_theme,
         })
       '';
 

@@ -6,9 +6,25 @@ delib.module {
     programs.nixvim.plugins.treesitter = {
       enable = true;
 
+        highlight = {
+          enable = true;
+          disable.__raw = ''
+            function(_, buf)
+              local stat = vim.uv.fs_stat(vim.api.nvim_buf_get_name(buf))
+              return stat and stat.size > 1024 * 1024 or false
+            end
+          '';
+        };
+        indent = {
+          enable = true;
+          disable.__raw = ''
+            function(_, buf)
+              local stat = vim.uv.fs_stat(vim.api.nvim_buf_get_name(buf))
+              return stat and stat.size > 1024 * 1024 or false
+            end
+          '';
+        };
       settings = {
-        highlight.enable = true;
-        indent.enable = true;
         ensureInstalled = [
           "rust"
           "python"

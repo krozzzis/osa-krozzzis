@@ -19,6 +19,8 @@ delib.module {
         // (nixvimOverrides.${name} or { });
     in
     {
+      home.packages = lib.optionals (builtins.hasAttr "rust-analyzer" enabledServers) [ pkgs.clippy ];
+
       programs.nixvim = {
         plugins.lsp = {
           enable = true;

@@ -36,7 +36,12 @@ delib.module {
                   '';
                 in
                 assert lib.hasInfix "cursor {" finalConfig;
-                (lib.replaceStrings [ "cursor {" ] [ "cursor {\n${shake}" ] finalConfig) + "\n" + ghosttyBlur;
+                assert lib.hasInfix "input {" finalConfig;
+                (lib.replaceStrings
+                  [ "cursor {" "input {" ]
+                  [ "cursor {\n${shake}" "input {\n  focus-follows-mouse max-scroll-amount=\"0%\"" ]
+                  finalConfig
+                ) + "\n" + ghosttyBlur;
             };
         };
       })

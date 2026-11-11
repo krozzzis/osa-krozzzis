@@ -27,6 +27,7 @@ delib.module {
     };
 
     osa = {
+      shell.fish.indexDatabase = "small";
       taskManager.missionCenter.enable = true;
       apps.foliate.enable = true;
       fileManager.dolphin.enable = false;

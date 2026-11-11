@@ -1,7 +1,7 @@
 # Extends osa.shell.starship (declared+enabled in the osa flake) with the
 # actual prompt format/theme -- same module name, no `options`, see
 # denix's module merging in modules/configurations/module.nix.
-{ delib, lib, ... }:
+{ delib, lib, pkgs, ... }:
 delib.module {
   name = "osa.shell.starship";
 
@@ -63,7 +63,7 @@ delib.module {
       nats.symbol = "";
       netns.symbol = "󰛳";
       nim.symbol = "";
-      nix_shell.symbol = "";
+      nix_shell.symbol = "";
       nodejs.symbol = "";
       ocaml.symbol = "";
       odin.symbol = "󰟢";
@@ -158,14 +158,10 @@ delib.module {
       xmake.symbol = "";
       zig.symbol = "";
     };
-  in
-  {
-    programs.starship = {
-      settings = recursiveUpdate
+    firstLine = "[$username@$hostname](bold green)$git_branch$direnv\${custom.devshell}";
+    settings = recursiveUpdate
         {
-          format = ''
-            [$username@$hostname](bold green)$git_branch$direnv
-            [$directory](bold blue)$character'';
+          format = firstLine + "\n[$directory](bold blue)$character";
           add_newline = true;
 
           character = {
@@ -205,9 +201,29 @@ delib.module {
             #format = " [$symbol$loaded/$allowed]($style)";
           };
 
+          nix_shell.disabled = true;
+
+          custom.devshell = {
+            when = ''test -z "$DIRENV_DIR" && { test "$IN_NIX_SHELL" = pure || test "$IN_NIX_SHELL" = impure; }'';
+            shell = [ "sh" ];
+            symbol = "";
+            format = " $symbol devshell";
+          };
+
           package.disabled = false;
         }
         (optionalAttrs cfg.useNerdFonts nerdFontPreset);
-    };
+  in
+  {
+    programs.starship.settings = settings;
+    xdg.configFile."starship-yazi.toml".source = (pkgs.formats.toml { }).generate "starship-yazi.toml" (settings // {
+      format = "[$directory](bold blue) " + firstLine;
+      add_newline = false;
+    });
+    programs.yazi.initLua = lib.mkIf myconfig.osa.shell.yazi.enable ''
+      require("starship"):setup({
+        config_file = os.getenv("HOME") .. "/.config/starship-yazi.toml",
+      })
+    '';
   };
 }

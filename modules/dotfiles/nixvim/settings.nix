@@ -3,6 +3,15 @@ delib.module {
   name = "osa.editor.nixvim";
 
   home.ifEnabled = {
+    programs.nixvim.diagnostic.settings = {
+      virtual_text = false;
+      virtual_lines.current_line = true;
+      signs = true;
+      underline = true;
+      severity_sort = true;
+      update_in_insert = false;
+    };
+
     programs.nixvim = {
       opts = {
         number = true;

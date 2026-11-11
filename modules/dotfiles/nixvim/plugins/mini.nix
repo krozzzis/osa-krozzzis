@@ -3,11 +3,6 @@ delib.module {
   name = "osa.editor.nixvim";
 
   home.ifEnabled = {
-    programs.nixvim.plugins.indent-blankline = {
-      enable = true;
-      settings.indent.char = "│";
-    };
-
     programs.nixvim.plugins.mini = {
       enable = true;
 
@@ -17,7 +12,13 @@ delib.module {
         pairs = { };
         ai = { };
         statusline = { };
+        surround = { };
+        move = { };
+        trailspace = { };
+        diff = { };
+        git = { };
       };
     };
+
   };
 }
